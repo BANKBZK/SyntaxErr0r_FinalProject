@@ -14,13 +14,16 @@ public class EnemyTalk : Enemy, IInteractable
     }
     public void Update()
     {
-        if (GetDistanPlayer() >= 2f || !canTalk)
+        if (interactionTextUI != null)
         {
-            interactionTextUI.gameObject.SetActive(false);
-        }
-        else
-        {
-            interactionTextUI.gameObject.SetActive(true);
+            if (GetDistanPlayer() >= 2f || !canTalk)
+            {
+                interactionTextUI.gameObject.SetActive(false);
+            }
+            else
+            {
+                interactionTextUI.gameObject.SetActive(true);
+            }
         }
         Turn(player.transform.position - transform.position);
     }
