@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Character : Identity, Idestoryable
 {
-    int _health;
+    [SerializeField]int _health;
     public int health {
         get { return _health; }
         set { _health = Mathf.Clamp(value, 0, _maxHealth); }

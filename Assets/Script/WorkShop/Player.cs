@@ -1,8 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Character
 {
+    public Inventory Inventory { get; private set; }
+    public UIInventory uiInventory;
+
     [Header("Hand setting")]
     public Transform RightHand;
     public Transform LeftHand;
@@ -31,6 +34,10 @@ public class Player : Character
     public void Update()
     {
         HandleInput();
+        if (Input.GetKeyDown(KeyCode.I)) // กด I เพื่อเปิด Inventory
+        {
+            uiInventory.UpdateInventoryUI(Inventory);
+        }
     }
     public void AddItem(Item item) 
     {
@@ -81,7 +88,13 @@ public class Player : Character
 
         }
     }
-    //��������ѧ��ѹ����ѡ������Ѻ�����������
+    
+    private void Awake()
+    {
+        Inventory = new Inventory(10); // กำหนดความจุเริ่มต้น
+    }
+
+    //à¾ÔèÁàµÔÁ¿Ñ§¡ìªÑ¹¡ÒÃÃÑ¡ÉÒáÅÐÃÑº¤ÇÒÁàÊÕÂËÒÂ
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);

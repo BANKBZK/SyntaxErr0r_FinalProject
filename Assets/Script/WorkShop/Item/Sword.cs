@@ -11,7 +11,7 @@ public class Sword : Item
     {
         base.OnCollect(player);
         Vector3 swordUp = new Vector3(90, 0, 0);
-        itemcollider.enabled = false;
+        //itemcollider.enabled = false;
         transform.parent = player.RightHand;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(swordUp);
