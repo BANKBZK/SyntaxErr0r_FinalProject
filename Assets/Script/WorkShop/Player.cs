@@ -36,7 +36,7 @@ public class Player : Character
         HandleInput();
         if (Input.GetKeyDown(KeyCode.I)) // กด I เพื่อเปิด Inventory
         {
-            uiInventory.UpdateInventoryUI(Inventory);
+            uiInventory.UpdateInventoryUI(Inventory); //เรียก UIInventory
         }
     }
     public void AddItem(Item item) 
@@ -94,7 +94,6 @@ public class Player : Character
         Inventory = new Inventory(10); // กำหนดความจุเริ่มต้น
     }
 
-    //à¾ÔèÁàµÔÁ¿Ñ§¡ìªÑ¹¡ÒÃÃÑ¡ÉÒáÅÐÃÑº¤ÇÒÁàÊÕÂËÒÂ
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);

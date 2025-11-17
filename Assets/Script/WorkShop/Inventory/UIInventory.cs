@@ -18,9 +18,7 @@ public class UIInventory : MonoBehaviour
         if (panelRoot != null) panelRoot.SetActive(false);
     }
 
-    /// <summary>
-    /// เรียกเมื่อต้องการ toggle อินเวนทอรี และรีเฟรชรายการภายใน
-    /// </summary>
+    /// เรียกเมื่อต้องการ toggle inventory และ reload รายการภายใน
     public void UpdateInventoryUI(Inventory inventory)
     {
         // Toggle เปิด/ปิด
@@ -48,9 +46,6 @@ public class UIInventory : MonoBehaviour
     {
         if (panelRoot != null && panelRoot.activeSelf)
             panelRoot.SetActive(false);
-
-        // ถ้าต้องการให้ item ใน slot ถูกเคลียร์ทุกครั้งที่ปิด ให้คงไว้
-        // ถ้าอยากให้ค้างไว้ตอนเปิดใหม่ คอมเมนต์บรรทัดด้านล่างออก
         ClearSlots();
     }
 
@@ -65,15 +60,12 @@ public class UIInventory : MonoBehaviour
             GameObject newSlot = Instantiate(slotPrefab, slotParent);
             slots.Add(newSlot);
 
-            // ตั้งชื่อแสดง
+            // ตั้งชื่อแสดงไปslotPrefabs text component
             var text = newSlot.GetComponentInChildren<TMP_Text>();
             if (text != null)
             {
                 text.text = itemData.Name;
             }
-
-            // ถ้าต้องการแสดงจำนวน / ไอคอน เพิ่ม logic ต่อที่นี่
-            // eg: newSlot.GetComponent<SlotView>().Set(itemData);
         }
     }
 
@@ -86,7 +78,7 @@ public class UIInventory : MonoBehaviour
         }
         slots.Clear();
 
-        // กันเหนียว: ถ้ามีลูกที่สร้างไว้แต่ไม่ได้ถูกเก็บใน slots
+        // กัน null ถ้ามีลูกที่สร้างไว้แต่ไม่ได้ถูกเก็บใน slots
         for (int i = slotParent.childCount - 1; i >= 0; i--)
         {
             Destroy(slotParent.GetChild(i).gameObject);

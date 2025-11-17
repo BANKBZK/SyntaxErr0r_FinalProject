@@ -22,7 +22,7 @@ public class Inventory
             return false;
         }
 
-        _items.Add(new ItemData(item.Name)); // Only store name
+        _items.Add(new ItemData(item.Name)); // เก็บข้อมูลชื่อใน Itemdata
         Debug.Log($"Added {item.Name} to inventory");
         return true;
     }
