@@ -21,9 +21,11 @@ public class Inventory
             Debug.Log("Inventory is full!");
             return false;
         }
-
-        _items.Add(new ItemData(item.Name)); // เก็บข้อมูลชื่อใน Itemdata
-        Debug.Log($"Added {item.Name} to inventory");
+        if (item.isInventory == true)
+        {
+            _items.Add(new ItemData(item.Name)); // เก็บข้อมูลชื่อใน Itemdata
+            Debug.Log($"Added {item.Name} to inventory");
+        }
         return true;
     }
 

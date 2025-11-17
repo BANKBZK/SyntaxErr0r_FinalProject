@@ -518,6 +518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: 
+  isInventory: 0
   Damage: 20
 --- !u!135 &78182586
 SphereCollider:
@@ -2820,6 +2821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Coin
+  isInventory: 0
   ScoreValue: 10
   SoundCoin: {fileID: 8300000, guid: 3e35bd5c051e93f4b95075c2a767c0c5, type: 3}
 --- !u!135 &792897849
@@ -3795,6 +3797,10 @@ PrefabInstance:
       propertyPath: drinkSound
       value: 
       objectReference: {fileID: 8300000, guid: 40edb9618b1b7f948a2c4c39a9072df2, type: 3}
+    - target: {fileID: 190502151871740773, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
+      propertyPath: isInventory
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5791420369477035222, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5
@@ -4297,6 +4303,10 @@ PrefabInstance:
     - target: {fileID: 7535368708064305048, guid: e360d8d16d87ca544b56a603ea831f2f, type: 3}
       propertyPath: _name
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7535368708064305048, guid: e360d8d16d87ca544b56a603ea831f2f, type: 3}
+      propertyPath: isInventory
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -3,6 +3,8 @@
 [RequireComponent(typeof(SphereCollider))]
 public class Item : Identity
 {
+    public bool isInventory;
+
     private Collider _collider;
     protected Collider itemCollider
     {
