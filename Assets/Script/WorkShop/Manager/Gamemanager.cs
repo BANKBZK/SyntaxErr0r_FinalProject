@@ -1,73 +1,86 @@
-using System.Collections.Generic;
-using TMPro;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
-// ¡ÓË¹´ãËéà»ç¹ sealed à¾×èÍ»éÍ§¡Ñ¹¡ÒÃÊ×º·Í´
-public class GameManager : MonoBehaviour
+[DefaultExecutionOrder(-100)] // à¹ƒà¸«à¹‰à¸•à¸·à¹ˆà¸™à¸à¹ˆà¸­à¸™ object à¸­à¸·à¹ˆà¸™ à¹† à¹ƒà¸™ Scene
+public sealed class GameManager : MonoBehaviour
 {
+    // âœ… Singleton (Instance)
+    public static GameManager Instance { get; private set; }
+
+    [Header("Item Database")]
     public List<ItemDefinition> itemDefinitions = new List<ItemDefinition>();
-    // 1. Private Static Field (The Singleton Instance)
-    // ãªé backing field à¾×èÍ¤Çº¤ØÁ¡ÒÃà¢éÒ¶Ö§
-    public static GameManager instance;
-    // 2. Public Static Property (Global Access Point)
-   
+
     [Header("Game State")]
     public int currentScore = 0;
     public bool isGamePaused = false;
 
-    [Header("UI Game")]
-    public GameObject pauseMenuUI;
-    public AudioClip pauseSound; //Here
-    public TMP_Text scoreText;
-    public Slider HPBar;
+    [Header("UI References")]
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private Slider hpBar;
 
-    // 3. Private Constructor Logic (ãªé Awake() á·¹ Constructor »¡µÔã¹ Unity)
+    [Header("Audio")]
+    [SerializeField] private AudioClip pauseSound;
+
     private void Awake()
     {
-        // µÃÇ¨ÊÍºÇèÒÁÕ Instance ÍÂÙèáÅéÇËÃ×ÍäÁè
-       if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-       else if (instance != this)
+        // âœ… à¸›à¹‰à¸­à¸‡à¸à¸±à¸™ instance à¸‹à¹‰à¸­à¸™
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+        Instance = this;
+
+        // âœ… à¸„à¸‡à¸­à¸¢à¸¹à¹ˆà¸‚à¹‰à¸²à¸¡à¸‹à¸µà¸™
+        DontDestroyOnLoad(gameObject);
+
+        // (à¹„à¸¡à¹ˆà¸šà¸±à¸‡à¸„à¸±à¸š) à¸•à¸£à¸§à¸ˆ refs à¸ªà¸³à¸„à¸±à¸à¹à¸¥à¸°à¹€à¸•à¸·à¸­à¸™
+        if (hpBar == null) Debug.LogWarning("[GameManager] HPBar is not assigned.");
+        if (scoreText == null) Debug.LogWarning("[GameManager] ScoreText is not assigned.");
+        if (pauseMenuUI == null) Debug.LogWarning("[GameManager] PauseMenuUI is not assigned.");
     }
 
-    // ------------------- Singleton Functionality -------------------
-
-    public void UpdateHealthBar(int currentHealth, int maxHealth)
-    {
-       HPBar.value = currentHealth;
-        HPBar.maxValue = maxHealth;
-    }
-    public void AddScore(int amount)
-    {
-        currentScore += amount;
-        scoreText.text = currentScore.ToString();
-    }
-
-    public void TogglePause()
-    {
-       isGamePaused = !isGamePaused;
-        Time.timeScale = isGamePaused ? 0 : 1;
-        pauseMenuUI.SetActive(isGamePaused);
-    }
-
-    public void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
-            SoundManager.instance.PlaySFX(pauseSound); //Here
+            if (pauseSound != null && SoundManager.instance != null)
+                SoundManager.instance.PlaySFX(pauseSound);
         }
     }
-    public ItemDefinition FindById(string id)
+
+    // ------------------- Gameplay APIs -------------------
+
+    public void UpdateHealthBar(int currentHealth, int maxHealth)
     {
-        return itemDefinitions.Find(d => d.Id == id);
+        if (hpBar == null) return;
+        hpBar.maxValue = maxHealth;
+        hpBar.value = currentHealth;
     }
 
+    public void AddScore(int amount)
+    {
+        currentScore += amount;
+        if (scoreText != null)
+            scoreText.text = currentScore.ToString();
+    }
+
+    public void TogglePause()
+    {
+        isGamePaused = !isGamePaused;
+        Time.timeScale = isGamePaused ? 0 : 1;
+        if (pauseMenuUI != null) pauseMenuUI.SetActive(isGamePaused);
+    }
+
+    // ------------------- Item Database Lookup -------------------
+
+    public ItemDefinition FindById(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id)) return null;
+        return itemDefinitions.Find(d => d != null && d.Id == id);
+    }
 }

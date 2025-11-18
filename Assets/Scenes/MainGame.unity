@@ -3309,9 +3309,9 @@ MonoBehaviour:
   currentScore: 0
   isGamePaused: 0
   pauseMenuUI: {fileID: 1811169451}
-  pauseSound: {fileID: 8300000, guid: f3f4ea46e616d5641b19303e28e01131, type: 3}
   scoreText: {fileID: 647386452}
-  HPBar: {fileID: 1245879753}
+  hpBar: {fileID: 0}
+  pauseSound: {fileID: 8300000, guid: f3f4ea46e616d5641b19303e28e01131, type: 3}
 --- !u!114 &966258045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3804,7 +3804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1327064809483523000, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
       propertyPath: definitionId
-      value: 01
+      value: potionheal
       objectReference: {fileID: 0}
     - target: {fileID: 1327064809483523000, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
       propertyPath: Definition.Id
@@ -3813,10 +3813,10 @@ PrefabInstance:
     - target: {fileID: 1327064809483523000, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
       propertyPath: Definition.Icon
       value: 
-      objectReference: {fileID: 21300048, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 1327064809483523000, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
       propertyPath: Definition.DisplayName
-      value: RedVial
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5791420369477035222, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
       propertyPath: m_LocalPosition.x
