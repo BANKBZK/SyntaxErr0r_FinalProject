@@ -77,10 +77,10 @@ PrefabInstance:
       addedObject: {fileID: 9118616605803565968}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8903becf9bb9b124099407630c637d16, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7535368708064305048}
+      addedObject: {fileID: 5651017365281907201}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8903becf9bb9b124099407630c637d16, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5651017365281907201}
+      addedObject: {fileID: 6272331852802127883}
   m_SourcePrefab: {fileID: 100100000, guid: 8903becf9bb9b124099407630c637d16, type: 3}
 --- !u!1 &2253393103804301607 stripped
 GameObject:
@@ -113,20 +113,6 @@ MonoBehaviour:
   isScaling: 1
   useEasingForScaling: 1
   scaleLerpSpeed: 1.11
---- !u!114 &7535368708064305048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2253393103804301607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34c444648fa008d42ba6b1ddcec29b58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _name: 
-  value: 5
 --- !u!135 &5651017365281907201
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -148,3 +134,17 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6272331852802127883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2253393103804301607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c38782564e052ac4bba419f2e7caabb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  definitionId: keymain
+  Amount: 1
