@@ -18,6 +18,7 @@ public class SkillBook : MonoBehaviour
         skillsSet.Add(new FireballSkill());
         skillsSet.Add(new HealSkill());
         skillsSet.Add(new BuffSkillMoveSpeed());
+        skillsSet.Add(new StrengthBuff());
     }
 
     void Update()
@@ -33,6 +34,10 @@ public class SkillBook : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.Alpha3))
         {
             UseSkill(2); // ใช้สกิลที่ 3 (Buff Move Speed)
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            UseSkill(3); // (Attack Damage Buff)
         }
         // อัปเดตสกิลที่มีผลต่อเนื่อง
         for (int i = DulationSkills.Count - 1; i >= 0; i--)
