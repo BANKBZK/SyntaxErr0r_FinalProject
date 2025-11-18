@@ -388,6 +388,7 @@ MonoBehaviour:
   Damage: 1
   Deffent: 10
   movementSpeed: 1
+  attackDamage: 0
   TimeToAttack: 1
 --- !u!135 &49340422
 SphereCollider:
@@ -663,7 +664,7 @@ MonoBehaviour:
   _name: KeypadDoor1
   interactionTextUI: {fileID: 774432540}
   isLock: 1
-  keyPadUI: {fileID: 0}
+  keyPadUI: {fileID: 1834221462}
 --- !u!1 &88575388
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,6 +894,7 @@ MonoBehaviour:
   Damage: 1
   Deffent: 10
   movementSpeed: 0
+  attackDamage: 0
   TimeToAttack: 1
   attackRange: 5
 --- !u!135 &203882644
@@ -2411,6 +2413,7 @@ MonoBehaviour:
   Damage: 10
   Deffent: 10
   movementSpeed: 0
+  attackDamage: 0
   TimeToAttack: 1
   canTalk: 0
   interactionTextUI: {fileID: 2096087477}
@@ -5614,6 +5617,7 @@ MonoBehaviour:
   Damage: 10
   Deffent: 10
   movementSpeed: 0
+  attackDamage: 0
   TimeToAttack: 1
   canTalk: 1
   interactionTextUI: {fileID: 1767451339}
@@ -7447,6 +7451,7 @@ MonoBehaviour:
   Damage: 10
   Deffent: 10
   movementSpeed: 0
+  attackDamage: 0
   TimeToAttack: 1
 --- !u!54 &1727691255
 Rigidbody:
@@ -7504,6 +7509,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1272070284696664651, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+      propertyPath: skillEffects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1272070284696664651, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+      propertyPath: 'skillEffects.Array.data[3]'
+      value: 
+      objectReference: {fileID: 5824670795371433373, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
     - target: {fileID: 1377451366773954460, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
       propertyPath: addItem
       value: 
@@ -8281,6 +8294,7 @@ MonoBehaviour:
   Damage: 10
   Deffent: 10
   movementSpeed: 2
+  attackDamage: 0
   TimeToAttack: 1
   canTalk: 1
   interactionTextUI: {fileID: 371924017}
