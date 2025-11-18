@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class StrengthBuff : Skill
 {
-    float DamageIncrease = 10f;
-    float OriginalDamage;
-    float TargetDamage;
+    int DamageIncrease = 10;
+    int OriginalDamage;
+    int TargetDamage;
 
     public float Duration{ get; set; }
 
@@ -19,21 +19,21 @@ public class StrengthBuff : Skill
     {
         timer = Duration;
 
-        OriginalDamage = character.attackDamage;
+        OriginalDamage = character.Damage;
         TargetDamage = OriginalDamage + DamageIncrease;
         Debug.Log($"{character.Name} damage increased by {DamageIncrease} for {Duration} seconds.");
     }
 
     public override void Deactivate(Character character)
     {
-        character.attackDamage = OriginalDamage;
+        character.Damage = OriginalDamage;
         Debug.Log($"{character.Name}'s increase damage has ended.");
     }
 
     public override void UpdateSkill(Character character)
     {
         timer -= Time.deltaTime;
-        character.attackDamage = TargetDamage;
+        character.Damage = TargetDamage;
         if (timer <= 0)
         {
             Deactivate(character);

@@ -16,7 +16,6 @@ public class Character : Identity, Idestoryable
     public int Damage = 10;
     public int Deffent = 10;
     public float movementSpeed;
-    public float attackDamage;
     protected Animator animator;
     protected Rigidbody rb;
     Quaternion newRotation;
