@@ -6,10 +6,10 @@ public class Player : Character
     public Inventory Inventory { get; private set; }
     public UIInventory uiInventory;
 
+
     [Header("Hand setting")]
     public Transform RightHand;
     public Transform LeftHand;
-    public List<Item> inventory = new List<Item>();
     public AudioClip addItem; //Here
     public AudioClip onAttack; //Here
 
@@ -22,6 +22,7 @@ public class Player : Character
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         health = maxHealth;
+        if (uiInventory != null) uiInventory.Bind(Inventory);
     }
 
     public void FixedUpdate()
@@ -34,15 +35,7 @@ public class Player : Character
     public void Update()
     {
         HandleInput();
-        if (Input.GetKeyDown(KeyCode.I)) // กด I เพื่อเปิด Inventory
-        {
-            uiInventory.UpdateInventoryUI(Inventory); //เรียก UIInventory
-        }
-    }
-    public void AddItem(Item item) 
-    {
-        inventory.Add(item);
-        SoundManager.instance.PlaySFX(addItem); //Here
+        if (Input.GetKeyDown(KeyCode.I)) uiInventory?.Toggle();
     }
     
     private void HandleInput()

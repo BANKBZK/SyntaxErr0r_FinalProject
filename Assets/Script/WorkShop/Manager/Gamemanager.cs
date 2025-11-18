@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,6 +6,7 @@ using UnityEngine.UI;
 // กำหนดให้เป็น sealed เพื่อป้องกันการสืบทอด
 public class GameManager : MonoBehaviour
 {
+    public List<ItemDefinition> itemDefinitions = new List<ItemDefinition>();
     // 1. Private Static Field (The Singleton Instance)
     // ใช้ backing field เพื่อควบคุมการเข้าถึง
     public static GameManager instance;
@@ -63,4 +65,9 @@ public class GameManager : MonoBehaviour
             SoundManager.instance.PlaySFX(pauseSound); //Here
         }
     }
+    public ItemDefinition FindById(string id)
+    {
+        return itemDefinitions.Find(d => d.Id == id);
+    }
+
 }

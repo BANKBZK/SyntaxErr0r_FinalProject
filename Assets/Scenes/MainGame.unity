@@ -518,7 +518,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: 
+  _player: {fileID: 0}
+  distanFormPlayer: 0
+  _IdentityInFront: {fileID: 0}
+  sphereRadius: 0
+  maxDistance: 0
   isInventory: 0
+  _collider: {fileID: 0}
   Damage: 20
 --- !u!135 &78182586
 SphereCollider:
@@ -2821,7 +2827,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Coin
+  _player: {fileID: 0}
+  distanFormPlayer: 0
+  _IdentityInFront: {fileID: 0}
+  sphereRadius: 0.5
+  maxDistance: 1
   isInventory: 0
+  _collider: {fileID: 0}
   ScoreValue: 10
   SoundCoin: {fileID: 8300000, guid: 3e35bd5c051e93f4b95075c2a767c0c5, type: 3}
 --- !u!135 &792897849
@@ -3159,7 +3171,6 @@ GameObject:
   - component: {fileID: 966258044}
   - component: {fileID: 966258043}
   - component: {fileID: 966258042}
-  - component: {fileID: 966258046}
   m_Layer: 5
   m_Name: Gamemanager
   m_TagString: Untagged
@@ -3290,6 +3301,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a90cf47e7ddddf142b67da1b9b72ba25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemDefinitions:
+  - Id: potionheal
+    DisplayName: RedVial
+    Icon: {fileID: 21300048, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+    MaxStack: 99
   currentScore: 0
   isGamePaused: 0
   pauseMenuUI: {fileID: 1811169451}
@@ -3308,21 +3324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4629f5f54521329499b79b511ead9dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &966258046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 966258037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba1ca3ce070853c4fabcd6b87d524d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelRoot: {fileID: 1909286985}
-  slotPrefab: {fileID: 5874090065565879173, guid: d2c628fa382a3d1418e42b173e577086, type: 3}
-  slotParent: {fileID: 240109912}
 --- !u!1 &974205316
 GameObject:
   m_ObjectHideFlags: 0
@@ -3800,6 +3801,22 @@ PrefabInstance:
     - target: {fileID: 190502151871740773, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
       propertyPath: isInventory
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1327064809483523000, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
+      propertyPath: definitionId
+      value: 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1327064809483523000, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
+      propertyPath: Definition.Id
+      value: potionheal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1327064809483523000, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
+      propertyPath: Definition.Icon
+      value: 
+      objectReference: {fileID: 21300048, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+    - target: {fileID: 1327064809483523000, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
+      propertyPath: Definition.DisplayName
+      value: RedVial
       objectReference: {fileID: 0}
     - target: {fileID: 5791420369477035222, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4488,7 +4505,7 @@ PrefabInstance:
     - target: {fileID: 1377451366773954460, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
       propertyPath: uiInventory
       value: 
-      objectReference: {fileID: 966258046}
+      objectReference: {fileID: 1909286987}
     - target: {fileID: 8189980434977739222, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
       propertyPath: m_Name
       value: Player
@@ -5321,8 +5338,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1909286986}
+  - component: {fileID: 1909286987}
   m_Layer: 0
-  m_Name: InventoryUI_Root
+  m_Name: InventoryUI_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5344,6 +5362,21 @@ Transform:
   - {fileID: 240109912}
   m_Father: {fileID: 550347005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1909286987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909286985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba1ca3ce070853c4fabcd6b87d524d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelRoot: {fileID: 1909286985}
+  slotParent: {fileID: 240109912}
+  slotPrefab: {fileID: 5874090065565879173, guid: d2c628fa382a3d1418e42b173e577086, type: 3}
 --- !u!1 &2003473632
 GameObject:
   m_ObjectHideFlags: 0

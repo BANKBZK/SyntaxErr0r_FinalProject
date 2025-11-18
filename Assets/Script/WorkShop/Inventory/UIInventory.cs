@@ -4,84 +4,51 @@ using UnityEngine;
 
 public class UIInventory : MonoBehaviour
 {
-    [Header("UI Roots")]
-    [SerializeField] private GameObject panelRoot;   // GameObject ที่มี Canvas/Panel ของ Inventory เช่น Canvas -> PanelInventory
-    [SerializeField] private GameObject slotPrefab;
-    [SerializeField] private Transform slotParent;
+    [SerializeField] GameObject panelRoot;
+    [SerializeField] Transform slotParent;
+    [SerializeField] GameObject slotPrefab;
 
-    private readonly List<GameObject> slots = new List<GameObject>();
-    private bool isOpen = false;
+    private List<GameObject> pool = new();
+    private Inventory inv;
 
-    private void Awake()
+    public void Bind(Inventory inventory)
     {
-        // ให้แน่ใจว่า UI ปิดตอนเริ่มเกม
-        if (panelRoot != null) panelRoot.SetActive(false);
+        if (inv != null) inv.Changed -= Refresh;
+        inv = inventory;
+        if (inv != null) inv.Changed += Refresh;
+        Refresh();
     }
 
-    /// เรียกเมื่อต้องการ toggle inventory และ reload รายการภายใน
-    public void UpdateInventoryUI(Inventory inventory)
+    public void Toggle()
     {
-        // Toggle เปิด/ปิด
-        isOpen = !isOpen;
+        bool show = !panelRoot.activeSelf;
+        panelRoot.SetActive(show);
+        if (show) Refresh();
+    }
 
-        if (isOpen)
+    void OnDestroy()
+    {
+        if (inv != null) inv.Changed -= Refresh;
+    }
+
+    private void Refresh()
+    {
+        if (inv == null) return;
+        EnsurePool(inv.Slots.Count);
+
+        for (int i = 0; i < pool.Count; i++)
+            pool[i].SetActive(i < inv.Slots.Count);
+
+        for (int i = 0; i < inv.Slots.Count; i++)
         {
-            Open(inventory);
-        }
-        else
-        {
-            Close();
-        }
-    }
-
-    private void Open(Inventory inventory)
-    {
-        if (panelRoot != null && !panelRoot.activeSelf)
-            panelRoot.SetActive(true);
-
-        RebuildSlots(inventory);
-    }
-
-    private void Close()
-    {
-        if (panelRoot != null && panelRoot.activeSelf)
-            panelRoot.SetActive(false);
-        ClearSlots();
-    }
-
-    private void RebuildSlots(Inventory inventory)
-    {
-        ClearSlots();
-
-        if (inventory == null) return;
-
-        foreach (var itemData in inventory.GetAllItems())
-        {
-            GameObject newSlot = Instantiate(slotPrefab, slotParent);
-            slots.Add(newSlot);
-
-            // ตั้งชื่อแสดงไปslotPrefabs text component
-            var text = newSlot.GetComponentInChildren<TMP_Text>();
-            if (text != null)
-            {
-                text.text = itemData.Name;
-            }
+            var view = pool[i].GetComponent<SlotView>();
+            view.Set(inv.Slots[i]);
         }
     }
 
-    private void ClearSlots()
+    private void EnsurePool(int need)
     {
-        // ลบทั้งจากลิสต์และตัวลูกจริง ๆ ใต้ slotParent ให้หมด
-        foreach (var s in slots)
-        {
-            if (s != null) Destroy(s);
-        }
-        slots.Clear();
-
-        // กัน null ถ้ามีลูกที่สร้างไว้แต่ไม่ได้ถูกเก็บใน slots
-        for (int i = slotParent.childCount - 1; i >= 0; i--)
-        {
-            Destroy(slotParent.GetChild(i).gameObject);
-        }
+        while (pool.Count < need)
+            pool.Add(GameObject.Instantiate(slotPrefab, slotParent));
     }
 }

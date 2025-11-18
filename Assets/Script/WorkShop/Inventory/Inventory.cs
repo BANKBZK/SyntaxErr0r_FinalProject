@@ -1,52 +1,88 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Inventory
 {
-    [SerializeField] private List<ItemData> _items = new List<ItemData>();
-    public int Capacity { get; private set; }
-    ItemData itemData;
+    public int Capacity { get; private set; }              // จำนวน "สล็อต"
+    private readonly List<ItemStack> _slots;
+    public event Action Changed;                           // ให้ UI subscribe
 
     public Inventory(int capacity)
     {
-        Capacity = capacity;
+        Capacity = Mathf.Max(1, capacity);
+        _slots = new List<ItemStack>(capacity);
     }
 
-    public bool AddItem(Item item)
+    public IReadOnlyList<ItemStack> Slots => _slots;
+
+    /// เพิ่มไอเท็ม คืนค่าจำนวนที่ "เพิ่มได้จริง"
+    public int Add(ItemDefinition def, int amount = 1)
     {
-        if (_items.Count >= Capacity)
+        if (def == null || amount <= 0) return 0;
+
+        int remaining = amount;
+
+        // เติมกองเดิมก่อน (copy -> modify -> assign back)
+        for (int i = 0; i < _slots.Count && remaining > 0; i++)
         {
-            Debug.Log("Inventory is full!");
-            return false;
+            var s = _slots[i];
+            if (s.Def == def && !s.IsFull)
+            {
+                remaining = s.Add(remaining);
+                _slots[i] = s; // assign back
+            }
         }
-        if (item.isInventory == true)
+
+        // ถ้ายังเหลือและมีสล็อตว่าง → สร้างกองใหม่
+        while (remaining > 0 && _slots.Count < Capacity)
         {
-            _items.Add(new ItemData(item.Name)); // เก็บข้อมูลชื่อใน Itemdata
-            Debug.Log($"Added {item.Name} to inventory");
+            var s = new ItemStack { Def = def, Amount = 0 };
+            remaining = s.Add(remaining);
+            _slots.Add(s);
         }
-        return true;
+
+        int added = amount - remaining;
+        if (added > 0) Changed?.Invoke();
+        return added;
     }
 
-    public bool RemoveItem(ItemData itemData)
+    /// ลบตามจำนวน (กระจายจากหลายกองได้)
+    public bool Remove(ItemDefinition def, int amount = 1)
     {
-        return _items.Remove(itemData);
-    }
+        if (def == null || amount <= 0) return false;
 
-    public List<ItemData> GetAllItems()
-    {
-        return new List<ItemData>(_items);
-    }
+        int need = amount;
 
-    public void ShowInventory()
-    {
-        Debug.Log("Inventory Items:");
-        foreach (var item in _items)
+        for (int i = _slots.Count - 1; i >= 0 && need > 0; i--)
         {
-            Debug.Log(item.Name);
+            var s = _slots[i];
+            if (s.Def != def) continue;
+
+            int take = Mathf.Min(need, s.Amount);
+            s.Amount -= take;
+            need -= take;
+
+            if (s.Amount <= 0)
+            {
+                _slots.RemoveAt(i);
+            }
+            else
+            {
+                _slots[i] = s; // assign back
+            }
         }
+
+        bool ok = (need == 0);
+        if (ok) Changed?.Invoke();
+        return ok;
     }
 
-    public int ItemCount => _items.Count;
+    public int CountOf(ItemDefinition def)
+    {
+        int total = 0;
+        foreach (var s in _slots)
+            if (s.Def == def) total += s.Amount;
+        return total;
+    }
 }
