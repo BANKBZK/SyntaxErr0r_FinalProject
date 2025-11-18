@@ -1,10 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using System.Collections;
 
-public class KeypadController : MonoBehaviour
+public class KeypadController : Stuff,IInteractable
 {
+    float resetInputDelay = 1.2f;
     public Door door;
+    public GameObject keyPadPanel;
+    bool isOpen;
     [Header("UI / Display")]
     public TextMeshProUGUI displayText; 
     public Image statusImage;  // เปลี่ยนจาก Renderer → Image
@@ -17,6 +22,8 @@ public class KeypadController : MonoBehaviour
     public AudioClip wrongcheckSFX;
     public AudioClip rightcheckSFX;
     public AudioClip pressSFX;
+
+    public bool isInteractable { get => isLock; set => isLock = value; }
 
     private void Start()
     {
@@ -71,7 +78,9 @@ public class KeypadController : MonoBehaviour
             playOneshotSfx(rightcheckSFX);
             statusImage.color = Color.green;
             door.isLock = false;
-            Destroy(gameObject, 1.0f); // ทำลาย Keypad หลังจากปลดล็อก
+            StartCoroutine(CloseKeypadAfterDelay(player));
+
+
         }
         else
         {
@@ -79,7 +88,7 @@ public class KeypadController : MonoBehaviour
             statusImage.color = Color.red;
         }
 
-        Invoke(nameof(ResetInput), 1.2f);
+        Invoke(nameof(ResetInput), resetInputDelay);
     }
 
     void ResetInput()
@@ -107,4 +116,33 @@ public class KeypadController : MonoBehaviour
     {
         GetComponent<AudioSource>().PlayOneShot(_sfx);
     }
+
+    public void Interact(Player player)
+    {
+        isOpen = !isOpen;
+        if(isOpen)
+        {
+            keyPadPanel.SetActive(true);
+            //player.canMove = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            keyPadPanel.SetActive(false);
+            //player.canMove = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+    IEnumerator CloseKeypadAfterDelay(Player player)
+    {
+        yield return new WaitForSeconds(resetInputDelay);
+        keyPadPanel.SetActive(false);
+        Destroy(gameObject);
+        //player.canMove = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
 }

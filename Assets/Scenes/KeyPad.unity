@@ -965,7 +965,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 691937548}
         m_TargetAssemblyTypeName: KeypadController, Assembly-CSharp
         m_MethodName: AddNumber
         m_Mode: 5
@@ -1175,6 +1175,7 @@ GameObject:
   - component: {fileID: 691937547}
   - component: {fileID: 691937546}
   - component: {fileID: 691937548}
+  - component: {fileID: 691937549}
   m_Layer: 5
   m_Name: Keypad_Root
   m_TagString: Untagged
@@ -1252,6 +1253,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ec79c8bc16f4b4185319d8668f0ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: 
+  interactionTextUI: {fileID: 0}
+  isLock: 1
+  door: {fileID: 0}
+  keyPadPanel: {fileID: 0}
   displayText: {fileID: 873638188}
   statusImage: {fileID: 2065566661}
   codeLength: 4
@@ -1259,6 +1265,27 @@ MonoBehaviour:
   wrongcheckSFX: {fileID: 8300000, guid: aa00eb14fe74b3a4882f7a611f4114fd, type: 3}
   rightcheckSFX: {fileID: 8300000, guid: 3e35bd5c051e93f4b95075c2a767c0c5, type: 3}
   pressSFX: {fileID: 8300000, guid: ee4d404d9827c354595e74aca40bbb43, type: 3}
+--- !u!65 &691937549
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691937544}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &778988663
 GameObject:
   m_ObjectHideFlags: 0
