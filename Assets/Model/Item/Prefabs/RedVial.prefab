@@ -134,5 +134,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c38782564e052ac4bba419f2e7caabb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  definitionId: 01
+  definitionId: potionheal
   Amount: 1

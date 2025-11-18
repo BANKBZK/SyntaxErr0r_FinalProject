@@ -25,6 +25,11 @@ public class Door : Stuff, IInteractable
         StopAllCoroutines();
 
         // ถ้าประตูเปิดอยู่ ให้ปิดประตู
+        if(isLock)
+        {
+            Debug.Log("The door is locked.");
+            return;
+        }
         if (isOpen)
         {
             StartCoroutine(SlideDoor(door.position - openOffset));
