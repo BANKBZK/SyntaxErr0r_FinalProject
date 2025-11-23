@@ -13,7 +13,7 @@ public class StrengthBuff : Skill
     {
         this.skillName = "Increase Damage";
         this.cooldownTime = 10;
-        this.Duration = 2f;
+        this.Duration = 4f;
     }
     public override void Activate(Character character)
     {
