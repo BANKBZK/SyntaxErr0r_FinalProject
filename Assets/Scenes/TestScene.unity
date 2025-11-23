@@ -5238,6 +5238,7 @@ GameObject:
   - component: {fileID: 966258044}
   - component: {fileID: 966258043}
   - component: {fileID: 966258042}
+  - component: {fileID: 966258046}
   m_Layer: 5
   m_Name: Gamemanager
   m_TagString: Untagged
@@ -5368,15 +5369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a90cf47e7ddddf142b67da1b9b72ba25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemDefinitions:
-  - Id: potionheal
-    DisplayName: RedVial
-    Icon: {fileID: 21300048, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
-    MaxStack: 99
-  - Id: keymain
-    DisplayName: Main Key
-    Icon: {fileID: 21300006, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
-    MaxStack: 1
   currentScore: 0
   isGamePaused: 0
   pauseMenuUI: {fileID: 1811169451}
@@ -5395,6 +5387,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4629f5f54521329499b79b511ead9dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &966258046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966258037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f98b51dfbe133246baae3bcb37824ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDefinitions:
+  - Id: potionheal
+    DisplayName: RedVial
+    Icon: {fileID: 21300000, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+    MaxStack: 1
+  - Id: keymain
+    DisplayName: Key1
+    Icon: {fileID: 21300058, guid: 09e4c6a7d75923945afe43953ef58ad2, type: 3}
+    MaxStack: 1
 --- !u!1 &974205316
 GameObject:
   m_ObjectHideFlags: 0
@@ -10027,6 +10040,10 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 966258041}
+  - {fileID: 1636963997}
+  - {fileID: 80067379}
+  - {fileID: 550347005}
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 1729820277}
@@ -10049,7 +10066,3 @@ SceneRoots:
   - {fileID: 781442571}
   - {fileID: 945590887}
   - {fileID: 792897846}
-  - {fileID: 966258041}
-  - {fileID: 1636963997}
-  - {fileID: 80067379}
-  - {fileID: 550347005}

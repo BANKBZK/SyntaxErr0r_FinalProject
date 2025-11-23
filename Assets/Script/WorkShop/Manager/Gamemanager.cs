@@ -9,9 +9,6 @@ public sealed class GameManager : MonoBehaviour
     // ✅ Singleton (Instance)
     public static GameManager Instance { get; private set; }
 
-    [Header("Item Database")]
-    public List<ItemDefinition> itemDefinitions = new List<ItemDefinition>();
-
     [Header("Game State")]
     public int currentScore = 0;
     public bool isGamePaused = false;
@@ -26,7 +23,6 @@ public sealed class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // ✅ ป้องกัน instance ซ้อน
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -75,12 +71,8 @@ public sealed class GameManager : MonoBehaviour
         Time.timeScale = isGamePaused ? 0 : 1;
         if (pauseMenuUI != null) pauseMenuUI.SetActive(isGamePaused);
     }
+}
 
     // ------------------- Item Database Lookup -------------------
 
-    public ItemDefinition FindById(string id)
-    {
-        if (string.IsNullOrWhiteSpace(id)) return null;
-        return itemDefinitions.Find(d => d != null && d.Id == id);
-    }
-}
+    

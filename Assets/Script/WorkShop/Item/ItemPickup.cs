@@ -4,7 +4,7 @@
 public class ItemPickup : MonoBehaviour
 {
     [Header("Item Info")]
-    [Tooltip("Id ของไอเท็มให้ตรงกับที่ตั้งใน GameManager.itemDefinitions")]
+    [Tooltip("Id ของไอเท็มให้ตรงกับที่ตั้งใน InventoryManagement.itemDefinitions")]
     public string definitionId;
 
     [Min(1)]
@@ -22,19 +22,19 @@ public class ItemPickup : MonoBehaviour
     private void Start()
     {
         // ✅ Lookup ที่ Start เพื่อกันลำดับผิดพลาด
-        var gm = GameManager.Instance;
-        if (gm == null)
+        var im = InventoryManagement.Instance;
+        if (im == null)
         {
-            Debug.LogError("[ItemPickup] GameManager.Instance is null. Ensure a GameManager exists in the first scene.");
+            Debug.LogError("[ItemPickup] InventoryManagement.Instance is null. Ensure a InventoryManagement exists in the first scene.");
             return;
         }
 
         if (!string.IsNullOrEmpty(definitionId))
         {
-            definition = gm.FindById(definitionId);
+            definition = im.FindById(definitionId);
             if (definition == null)
             {
-                Debug.LogWarning($"[ItemPickup] Definition for Id '{definitionId}' not found in GameManager.");
+                Debug.LogWarning($"[ItemPickup] Definition for Id '{definitionId}' not found in InventoryManagement.");
             }
         }
         else
