@@ -3904,7 +3904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Door
   interactionTextUI: {fileID: 726949856}
-  isUnlock: 1
+  isUnlock: 0
   openOffset: {x: 2, y: 0, z: 0}
   slideSpeed: 2
   door: {fileID: 726949855}
