@@ -23,6 +23,8 @@ public class Player : Character
         animator = GetComponent<Animator>();
         health = maxHealth;
         if (uiInventory != null) uiInventory.Bind(Inventory);
+
+        GameManager.Instance?.UpdateHealthBar(health, maxHealth);
     }
 
     public void FixedUpdate()

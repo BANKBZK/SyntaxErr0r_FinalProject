@@ -1099,7 +1099,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeacae5525bae4d4f873b43b1765234b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffIcon: {fileID: 547733263}
 --- !u!114 &224268652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5177,7 +5176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeacae5525bae4d4f873b43b1765234b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffIcon: {fileID: 0}
 --- !u!1001 &945590887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5508,10 +5506,14 @@ MonoBehaviour:
     DisplayName: RedVial
     Icon: {fileID: 21300000, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
     MaxStack: 1
+    Type: 1
+    HealAmount: 25
   - Id: keymain
     DisplayName: Key1
     Icon: {fileID: 21300058, guid: 09e4c6a7d75923945afe43953ef58ad2, type: 3}
     MaxStack: 1
+    Type: 0
+    HealAmount: 0
 --- !u!1 &974205316
 GameObject:
   m_ObjectHideFlags: 0
