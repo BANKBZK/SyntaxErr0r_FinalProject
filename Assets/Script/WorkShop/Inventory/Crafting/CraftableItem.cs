@@ -1,16 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CraftableItem : MonoBehaviour
+public class CraftableItem : MonoBehaviour, ICraftable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public string craftItemId; // ผูกกับ ItemDefinition Id ของผลลัพธ์
 
-    // Update is called once per frame
-    void Update()
+    public void OnCrafted(Player player)
     {
-        
+        // ทำอะไรสักอย่าง เช่น แสดงเอฟเฟกต์/ปลดล็อคความสามารถ
+        Debug.Log($"Crafted item: {craftItemId}");
     }
 }
