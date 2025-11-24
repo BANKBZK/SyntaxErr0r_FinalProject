@@ -6,7 +6,6 @@ public class StrengthBuff : Skill
     int DamageIncrease = 10;
     int OriginalDamage;
     int TargetDamage;
-
     public float Duration{ get; set; }
 
     public StrengthBuff()
@@ -21,7 +20,7 @@ public class StrengthBuff : Skill
 
         OriginalDamage = character.Damage;
         TargetDamage = OriginalDamage + DamageIncrease;
-        Debug.Log($"{character.Name} damage increased by {DamageIncrease} for {Duration} seconds.");
+        Debug.Log($"{character.Name} damage increased by {DamageIncrease} for {Duration} seconds.");       
     }
 
     public override void Deactivate(Character character)
