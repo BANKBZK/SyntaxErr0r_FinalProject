@@ -29,7 +29,7 @@ public class CraftingTable : Stuff, IInteractable
             return;
         }
 
-        if (isOpen)
+        if (isOpen && !isLock)
         {
             // เปิด UI Crafting และส่ง Inventory + Player เข้าไป
             uiCrafting.Open(craftingManager, player.Inventory, player);

@@ -5896,7 +5896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: CraftingTable
   interactionTextUI: {fileID: 1961475383}
-  isLock: 0
+  isLock: 1
   craftingManager: {fileID: 213556506}
   uiCrafting: {fileID: 1607980302}
 --- !u!1 &1865228761
@@ -6355,12 +6355,12 @@ GameObject:
   - component: {fileID: 1961475384}
   - component: {fileID: 1961475383}
   m_Layer: 0
-  m_Name: NPC_Interact_Text
+  m_Name: CraftingTable_Interact_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1961475382
 RectTransform:
   m_ObjectHideFlags: 0
