@@ -663,7 +663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Keypad Door1
   interactionTextUI: {fileID: 774432540}
-  isLock: 0
+  isUnlock: 1
   door: {fileID: 726949857}
   keyPadPanel: {fileID: 1834221462}
   displayText: {fileID: 541610621}
@@ -2536,7 +2536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: NPC_Quest
   interactionTextUI: {fileID: 2096087477}
-  isLock: 1
+  isUnlock: 1
   canTalk: 1
   WordTextUI: {fileID: 26317489}
 --- !u!135 &385220186
@@ -3803,7 +3803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Box
   interactionTextUI: {fileID: 1311756934}
-  isLock: 1
+  isUnlock: 1
   DropItem: {fileID: 6563031673306594924, guid: 8db164f48fcdae64180ebf0ce2bb5d92, type: 3}
 --- !u!1001 &726949853
 PrefabInstance:
@@ -3855,7 +3855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6604487965849062585, guid: 50215adbee6ce2b449b0f2fc29a5e5fe, type: 3}
       propertyPath: m_Name
-      value: HJD_FP_door00
+      value: Door
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6983869072611311343, guid: 50215adbee6ce2b449b0f2fc29a5e5fe, type: 3}
@@ -3904,7 +3904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Door
   interactionTextUI: {fileID: 726949856}
-  isLock: 1
+  isUnlock: 1
   openOffset: {x: 2, y: 0, z: 0}
   slideSpeed: 2
   door: {fileID: 726949855}
@@ -4322,7 +4322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   interactionTextUI: {fileID: 1780669245}
-  isLock: 1
+  isUnlock: 1
   shieldMesh: {fileID: 1417091767}
   Deffent: 10
 --- !u!65 &781442575
@@ -5321,7 +5321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Trap
   interactionTextUI: {fileID: 726949856}
-  isLock: 1
+  isUnlock: 1
   Damage: 10
   spikes: {fileID: 966173995}
 --- !u!1 &966258037
@@ -8183,7 +8183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Switch
   interactionTextUI: {fileID: 425545790}
-  isLock: 1
+  isUnlock: 1
   isOn: 0
   InteracTo: {fileID: 726949857}
 --- !u!1 &1767451337

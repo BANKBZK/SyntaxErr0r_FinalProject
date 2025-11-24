@@ -5,7 +5,7 @@ public class Torch : Stuff, IInteractable
     public Torch() { 
         Name = "Torch";
     }
-    public bool isInteractable { get => isLock; set => isLock = value; }
+    public bool isInteractable { get => isUnlock; set => isUnlock = value; }
 
     public GameObject Firelight;
     public bool isOn;

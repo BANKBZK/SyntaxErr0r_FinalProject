@@ -6,7 +6,7 @@ public abstract class Stuff : Identity
 {
     public TMP_Text interactionTextUI;
     protected Collider _collider;
-    public bool isLock = true;
+    public bool isUnlock = true;
 
     public override void SetUP()
     {
@@ -15,7 +15,7 @@ public abstract class Stuff : Identity
     }
     public void Update()
     {
-        if (GetDistanPlayer() >= 2f || !isLock)
+        if (GetDistanPlayer() >= 2f || !isUnlock)
         {
             interactionTextUI.gameObject.SetActive(false);
         }

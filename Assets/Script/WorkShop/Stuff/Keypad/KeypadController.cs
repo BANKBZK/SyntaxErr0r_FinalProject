@@ -23,7 +23,7 @@ public class KeypadController : Stuff,IInteractable
     public AudioClip rightcheckSFX;
     public AudioClip pressSFX;
 
-    public bool isInteractable { get => isLock; set => isLock = value; }
+    public bool isInteractable { get => isUnlock; set => isUnlock = value; }
 
     private void Start()
     {
@@ -77,7 +77,7 @@ public class KeypadController : Stuff,IInteractable
         {
             playOneshotSfx(rightcheckSFX);
             statusImage.color = Color.green;
-            door.isLock = false;
+            door.isUnlock = true;
             StartCoroutine(CloseKeypadAfterDelay(player));
 
 

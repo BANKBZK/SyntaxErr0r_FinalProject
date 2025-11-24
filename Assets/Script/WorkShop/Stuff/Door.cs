@@ -17,7 +17,7 @@ public class Door : Stuff, IInteractable
     public float slideSpeed = 2f;
     public Transform door;
 
-    public bool isInteractable { get => isLock; set => isLock = value; }
+    public bool isInteractable { get => isUnlock; set => isUnlock = value; }
 
     public void Interact(Player player)
     {
@@ -25,7 +25,7 @@ public class Door : Stuff, IInteractable
         StopAllCoroutines();
 
         // ถ้าประตูเปิดอยู่ ให้ปิดประตู
-        if(isLock)
+        if(!isUnlock)
         {
             Debug.Log("The door is locked.");
             return;

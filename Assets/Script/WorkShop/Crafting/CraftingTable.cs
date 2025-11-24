@@ -12,7 +12,7 @@ public class CraftingTable : Stuff, IInteractable
 
     bool isOpen;
 
-    public bool isInteractable { get => isLock; set => isLock = value; }
+    public bool isInteractable { get => isUnlock; set => isUnlock = value; }
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class CraftingTable : Stuff, IInteractable
             return;
         }
 
-        if (isOpen && isLock)
+        if (isOpen && isUnlock)
         {
             // เปิด UI Crafting และส่ง Inventory + Player เข้าไป
             uiCrafting.Open(craftingManager, player.Inventory, player);

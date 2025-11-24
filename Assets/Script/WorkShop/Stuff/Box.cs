@@ -9,7 +9,7 @@ public class Box : Stuff, IInteractable, Idestoryable
         Name = "Box";
     }
     public GameObject DropItem;
-    public bool isInteractable { get => isLock; set => isLock=value; }
+    public bool isInteractable { get => isUnlock; set => isUnlock =value; }
 
     // สร้าง private backing fields สำหรับ health และ maxHealth
     private int _health;
