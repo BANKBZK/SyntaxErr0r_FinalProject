@@ -11,7 +11,7 @@ public class StrengthBuff : Skill
     {
         this.skillName = "StrengthBuff";
         this.cooldownTime = 10;
-        this.Duration = 4f;
+        this.Duration = 5f;
     }
 
     public override void Activate(Character character)
