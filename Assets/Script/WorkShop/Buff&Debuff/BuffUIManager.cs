@@ -8,7 +8,10 @@ public class BuffUIManager : MonoBehaviour
     public BuffUIAssets buffAssets;  // Drag BuffData into this
 
     [Header("UI Elements")]
+    public Transform effectParticles;
     public Image buffImage;
+
+    private GameObject currentEffectObject;
 
     float timer;
     bool isShowing = false;
@@ -37,16 +40,42 @@ public class BuffUIManager : MonoBehaviour
         // check if it's a skill with a timer (if skill.timer <= 0, it means the skill is finished after pressing it, no need to show the buff)
         if (skill.timer > 0)
         {
+            var entry = buffAssets.GetEntry(skill.skillName);
             // Take the image from Assets using the skill name.
             Sprite s = buffAssets.GetSprite(skill.skillName);
 
-            if (s != null)
+            if (s != null && entry != null)
             {
-                ShowBuff(skill.timer, s);
-            }
+                {
+                    ShowBuff(skill.timer, s);
+                }
+
+                if (entry.edgeScreenEffect != null)
+                {
+                    ShowEffect(entry.edgeScreenEffect);
+                }
+            }           
         }
     }
 
+    public void ShowEffect(GameObject prefab)
+    {
+        if (currentEffectObject != null)
+            Destroy(currentEffectObject);
+
+        if (effectParticles != null)
+        {            
+            currentEffectObject = Instantiate(prefab, effectParticles);
+
+            currentEffectObject.transform.localPosition = Vector3.zero;
+            currentEffectObject.transform.localRotation = Quaternion.identity;
+            currentEffectObject.transform.localScale = Vector3.one;
+        }
+        else
+        {
+            Debug.Log("Forgot to drag EffectPosition into Effect Particles!");
+        }
+    }    
     public void ShowBuff(float duration, Sprite sprite)
     {
         buffImage.sprite = sprite;
@@ -65,6 +94,12 @@ public class BuffUIManager : MonoBehaviour
         {
             buffImage.gameObject.SetActive(false);
             isShowing = false;
+
+            if (currentEffectObject != null)
+            {
+                Destroy(currentEffectObject);
+                currentEffectObject = null;
+            }
         }
     }
 }
