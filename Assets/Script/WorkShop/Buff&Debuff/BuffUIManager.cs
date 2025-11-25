@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class BuffUIManager : MonoBehaviour
 {
     [Header("Dependencies")]
-    public SkillBook skillBook;      // Inspector Drag the SkillBook into Inspector
+    public SkillBook skillBook;      // Drag the SkillBook into Inspector
     public BuffUIAssets buffAssets;  // Drag BuffData into this
 
     [Header("UI Elements")]
