@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using System;
 
 public class SkillBook : MonoBehaviour
 {
+    public event Action<Skill> OnSkillActivated;
     public List<Skill> skillsSet = new List<Skill>();
     public GameObject[] skillEffects;
     List<Skill> DulationSkills = new List<Skill>();
@@ -64,6 +66,8 @@ public class SkillBook : MonoBehaviour
             GameObject g = Instantiate(skillEffects[index], transform.position, Quaternion.identity, transform);
             Destroy(g, 1);
             skill.Activate(player);
+            if(skill.timer > 0)
+            OnSkillActivated?.Invoke(skill);
             skill.TimeStampSkill(Time.time); // บันทึกเวลาที่ใช้สกิล
             // ตรวจสอบว่าเป็นสกิลที่มีผลต่อเนื่องหรือไม่
             if (skill.timer > 0)
