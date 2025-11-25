@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entries:
   - skillName: StrengthBuff
-    sprites: {fileID: 21300000, guid: 2652659ac87f6554584d101b4906c33a, type: 3}
+    sprites: {fileID: 21300000, guid: 70b1246bb9149d54895011d33620daab, type: 3}
+    edgeScreenEffect: {fileID: 4723145536311755656, guid: ea03bf41356a74144b8e1992af41d283, type: 3}
