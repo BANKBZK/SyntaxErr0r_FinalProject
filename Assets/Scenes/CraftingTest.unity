@@ -1407,23 +1407,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 391204520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 70
     m_Right: 0
-    m_Top: 0
+    m_Top: 66
     m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 100, y: 100}
+  m_Spacing: {x: 45.42, y: 91.6}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &393502428
 GameObject:
   m_ObjectHideFlags: 0
@@ -6146,7 +6144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: CraftingTable
   interactionTextUI: {fileID: 1961475383}
-  isLock: 1
+  isUnlock: 1
   craftingManager: {fileID: 213556506}
   uiCrafting: {fileID: 1607980302}
 --- !u!1 &1865228761
