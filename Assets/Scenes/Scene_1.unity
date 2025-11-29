@@ -1354,7 +1354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 70
+    m_Left: 60
     m_Right: 0
     m_Top: 66
     m_Bottom: 0
@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 45.42, y: 91.6}
+  m_Spacing: {x: 94.7, y: 91.6}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!114 &402286528
@@ -2057,7 +2057,7 @@ MonoBehaviour:
   skillBook: {fileID: 1395758044}
   buffAssets: {fileID: 11400000, guid: 6ec2e1576c10adb418bcb0cfec6771c2, type: 2}
   effectParticles: {fileID: 1957020505}
-  buffImage: {fileID: 0}
+  buffImage: {fileID: 449568209}
 --- !u!4 &574975975
 Transform:
   m_ObjectHideFlags: 0
@@ -2109,7 +2109,7 @@ MonoBehaviour:
   interactionTextUI: {fileID: 1952585884}
   isUnlock: 1
   craftingManager: {fileID: 1557841982}
-  uiCrafting: {fileID: 0}
+  uiCrafting: {fileID: 448925410}
 --- !u!65 &597884614
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4971,7 +4971,7 @@ MonoBehaviour:
   Damage: 25
   Deffent: 10
   movementSpeed: 3
-  uiInventory: {fileID: 0}
+  uiInventory: {fileID: 707331233}
   RightHand: {fileID: 1395758040}
   LeftHand: {fileID: 1395758041}
   addItem: {fileID: 8300000, guid: ee4d404d9827c354595e74aca40bbb43, type: 3}
@@ -5575,31 +5575,31 @@ MonoBehaviour:
   itemDefinitions:
   - Id: potionheal
     DisplayName: RedVial
-    Icon: {fileID: 21300000, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+    Icon: {fileID: -1401110133662507876, guid: 9035a2602b4b6774fb8c30b4f5872fca, type: 3}
     MaxStack: 64
     Type: 1
     HealAmount: 25
   - Id: keymain
     DisplayName: Key1
-    Icon: {fileID: 21300000, guid: f10e3953658415541a63c0cda0fba5ae, type: 3}
+    Icon: {fileID: 4143605862378377139, guid: 76a0ae3b6739b9d49b8afe591137c19d, type: 3}
     MaxStack: 1
     Type: 0
     HealAmount: 0
   - Id: axe
     DisplayName: Stone Axe
-    Icon: {fileID: 21300074, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+    Icon: {fileID: 6674386295937086461, guid: 7abd59d488ec3484089d5f418816dbdb, type: 3}
     MaxStack: 1
     Type: 0
     HealAmount: 0
   - Id: wood
     DisplayName: Wood
-    Icon: {fileID: 21300102, guid: 09e4c6a7d75923945afe43953ef58ad2, type: 3}
+    Icon: {fileID: 21300000, guid: bf28baa4679067949b05bfb4336d9a5b, type: 3}
     MaxStack: 64
     Type: 0
     HealAmount: 0
   - Id: stone
     DisplayName: Stone
-    Icon: {fileID: 21300094, guid: 09e4c6a7d75923945afe43953ef58ad2, type: 3}
+    Icon: {fileID: 21300000, guid: eafda999f83d2b84b896a5cb0060c9eb, type: 3}
     MaxStack: 64
     Type: 0
     HealAmount: 0
@@ -5631,7 +5631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c32227e3234fd4286551bb22299086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingScreenPanel: {fileID: 0}
+  loadingScreenPanel: {fileID: 642377801}
 --- !u!114 &1557841986
 MonoBehaviour:
   m_ObjectHideFlags: 0
