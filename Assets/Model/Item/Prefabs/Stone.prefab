@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 975660985502538798}
   - component: {fileID: 3223588787500812158}
   - component: {fileID: 1751531206059964433}
-  - component: {fileID: 7617851576497350561}
   m_Layer: 0
   m_Name: SM_Rock_01_LOD1
   m_TagString: Untagged
@@ -59,6 +58,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
@@ -84,27 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7617851576497350561
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505150136346833364}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.47122955, y: 0.6658225, z: 0.4545058}
-  m_Center: {x: 0.009060688, y: 0.055079907, z: -0.0005090013}
 --- !u!1 &6852797787990927511
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +97,6 @@ GameObject:
   - component: {fileID: 2601606107364377568}
   - component: {fileID: 999742793123152250}
   - component: {fileID: 8080529600532774140}
-  - component: {fileID: 3447313376563957250}
   m_Layer: 0
   m_Name: SM_Rock_01_LOD0
   m_TagString: Untagged
@@ -164,6 +144,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
@@ -189,28 +172,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3447313376563957250
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6852797787990927511}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7636771928295434382, guid: cd4481062134e8644b2b10b4e3de6840, type: 3}
 --- !u!1 &7088034624560197325
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,8 +182,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4074332399339427780}
   - component: {fileID: 8296513961285835218}
+  - component: {fileID: 6785061423523660228}
+  - component: {fileID: 3832233645481103638}
   m_Layer: 0
-  m_Name: SM_Rock_01
+  m_Name: Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,7 +201,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2601606107364377568}
@@ -268,3 +231,38 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1751531206059964433}
   m_Enabled: 1
+--- !u!65 &6785061423523660228
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7088034624560197325}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.47122955, y: 0.6658225, z: 0.4545058}
+  m_Center: {x: 0.009060688, y: 0.055079907, z: -0.0005090013}
+--- !u!114 &3832233645481103638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7088034624560197325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c38782564e052ac4bba419f2e7caabb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  definitionId: stone
+  Amount: 1
