@@ -13,7 +13,7 @@ public abstract class Stuff : Identity
         interactionTextUI = GetComponentInChildren<TMP_Text>();
         _collider = GetComponent<Collider>();
     }
-    public void Update()
+    public virtual void Update()
     {
         if (GetDistanPlayer() >= 2f || !isUnlock)
         {
