@@ -5535,9 +5535,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentScore: 0
   isGamePaused: 0
-  pauseMenuUI: {fileID: 0}
-  scoreText: {fileID: 0}
-  hpBar: {fileID: 0}
+  pauseMenuUI: {fileID: 910512124}
+  hpBar: {fileID: 2004345733}
   pauseSound: {fileID: 8300000, guid: f3f4ea46e616d5641b19303e28e01131, type: 3}
 --- !u!114 &1557841982
 MonoBehaviour:
