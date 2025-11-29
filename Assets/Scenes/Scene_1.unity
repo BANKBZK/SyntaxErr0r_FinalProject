@@ -8043,7 +8043,7 @@ MonoBehaviour:
   isGamePaused: 0
   pauseMenuUI: {fileID: 839709641}
   scoreText: {fileID: 1543347990}
-  hpBar: {fileID: 0}
+  hpBar: {fileID: 50293376}
   pauseSound: {fileID: 8300000, guid: f3f4ea46e616d5641b19303e28e01131, type: 3}
 --- !u!114 &1557841982
 MonoBehaviour:
@@ -11179,9 +11179,9 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1557841990}
   - {fileID: 361713798}
   - {fileID: 574975975}
-  - {fileID: 1557841990}
   - {fileID: 102484550}
   - {fileID: 950744335}
   - {fileID: 1395758038}
