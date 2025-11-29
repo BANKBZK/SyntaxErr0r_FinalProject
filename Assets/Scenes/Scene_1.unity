@@ -6071,9 +6071,9 @@ MonoBehaviour:
   interactionTextUI: {fileID: 475462671}
   isUnlock: 1
   door: {fileID: 1854159804}
-  keyPadPanel: {fileID: 0}
-  displayText: {fileID: 0}
-  statusImage: {fileID: 0}
+  keyPadPanel: {fileID: 2111069332}
+  displayText: {fileID: 621301273}
+  statusImage: {fileID: 1564225625}
   codeLength: 4
   targetCode: 7888
   wrongcheckSFX: {fileID: 8300000, guid: aa00eb14fe74b3a4882f7a611f4114fd, type: 3}
