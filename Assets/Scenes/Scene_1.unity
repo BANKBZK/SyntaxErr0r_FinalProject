@@ -9759,10 +9759,14 @@ MonoBehaviour:
   _name: NPC_Quest1
   interactionTextUI: {fileID: 1948543710}
   isUnlock: 1
-  questItemId: keymain
-  itemAmountNeeded: 1
-  questTitle: Find the Key 1
+  npcType: 0
+  requiredItemId: keymain
+  requiredAmount: 1
+  rewardItemId: potionheal
+  rewardAmount: 10
+  objectToUnlock: {fileID: 0}
   questDesc: Please bring me the Key 1.
+  completeDesc: Thank you!
   WordTextUI: {fileID: 1318782185}
   canTalk: 1
 --- !u!1 &1908042094
