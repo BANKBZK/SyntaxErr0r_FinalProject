@@ -15,7 +15,6 @@ public sealed class GameManager : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private GameObject pauseMenuUI;
-    [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Slider hpBar;
 
     [Header("Audio")]
@@ -35,7 +34,6 @@ public sealed class GameManager : MonoBehaviour
 
         // (ไม่บังคับ) ตรวจ refs สำคัญและเตือน
         if (hpBar == null) Debug.LogWarning("[GameManager] HPBar is not assigned.");
-        if (scoreText == null) Debug.LogWarning("[GameManager] ScoreText is not assigned.");
         if (pauseMenuUI == null) Debug.LogWarning("[GameManager] PauseMenuUI is not assigned.");
     }
 
@@ -57,14 +55,6 @@ public sealed class GameManager : MonoBehaviour
         hpBar.maxValue = maxHealth;
         hpBar.value = currentHealth;
     }
-
-    public void AddScore(int amount)
-    {
-        currentScore += amount;
-        if (scoreText != null)
-            scoreText.text = currentScore.ToString();
-    }
-
     public void TogglePause()
     {
         isGamePaused = !isGamePaused;
