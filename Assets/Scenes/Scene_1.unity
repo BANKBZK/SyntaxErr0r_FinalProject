@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 138607095}
   - component: {fileID: 138607094}
   m_Layer: 5
-  m_Name: Image Health
+  m_Name: HPImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -566,7 +566,7 @@ RectTransform:
   m_GameObject: {fileID: 138607092}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.147776, y: 1.147776, z: 1.147776}
+  m_LocalScale: {x: 0.87387073, y: 0.87387073, z: 0.87387073}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 952544880}
@@ -3647,8 +3647,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2004345732}
   - {fileID: 138607093}
+  - {fileID: 2004345732}
   - {fileID: 910512125}
   - {fileID: 642377802}
   - {fileID: 449568208}
@@ -6903,7 +6903,7 @@ RectTransform:
   m_GameObject: {fileID: 1751460386}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0354, y: 1.5536177, z: 1.0354}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2004345732}
@@ -6933,8 +6933,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1003695325810134894, guid: 1129e40c4bb98d04a8cc90b024594009, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -8586,8 +8586,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -6550432720726904964, guid: 1e8ffb2f21a909b46bb2883ddb8a7b21, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
