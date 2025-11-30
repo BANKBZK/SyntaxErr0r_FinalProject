@@ -16311,7 +16311,7 @@ MonoBehaviour:
   musicSource: {fileID: 0}
   sfxSource: {fileID: 0}
   defaultButtonClick: {fileID: 8300000, guid: 40edb9618b1b7f948a2c4c39a9072df2, type: 3}
-  defaultBackgroundMusic: {fileID: 8300000, guid: 033766cc31c97904bae4404b8a079544, type: 3}
+  defaultBackgroundMusic: {fileID: 8300000, guid: 67852d1a25d7e5149a97ba37da3b8116, type: 3}
 --- !u!114 &1557841985
 MonoBehaviour:
   m_ObjectHideFlags: 0
