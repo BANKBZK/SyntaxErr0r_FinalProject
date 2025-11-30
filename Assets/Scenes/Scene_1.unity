@@ -12667,6 +12667,17 @@ MonoBehaviour:
       Amount: 5
     ResultItemId: axe
     ResultAmount: 1
+  - RecipeId: magnet
+    DisplayName: Magnet
+    Ingredients:
+    - ItemId: wood
+      Amount: 5
+    - ItemId: stone
+      Amount: 5
+    - ItemId: iron
+      Amount: 1
+    ResultItemId: magnet
+    ResultAmount: 1
 --- !u!114 &1557841983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12680,18 +12691,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDefinitions:
-  - Id: potionheal
-    DisplayName: RedVial
-    Icon: {fileID: -1401110133662507876, guid: 9035a2602b4b6774fb8c30b4f5872fca, type: 3}
-    MaxStack: 64
-    Type: 1
-    HealAmount: 25
+  - Id: magnet
+    DisplayName: Magnet
+    Icon: {fileID: 1535325516486818496, guid: bd6ebf661ce04ab4599d54cda1928984, type: 3}
+    MaxStack: 1
+    Type: 0
+    HealAmount: 0
   - Id: keymain
     DisplayName: Key1
     Icon: {fileID: 4143605862378377139, guid: 76a0ae3b6739b9d49b8afe591137c19d, type: 3}
     MaxStack: 1
     Type: 0
     HealAmount: 0
+  - Id: potionheal
+    DisplayName: RedVial
+    Icon: {fileID: -1401110133662507876, guid: 9035a2602b4b6774fb8c30b4f5872fca, type: 3}
+    MaxStack: 64
+    Type: 1
+    HealAmount: 25
   - Id: axe
     DisplayName: Stone Axe
     Icon: {fileID: 6674386295937086461, guid: 7abd59d488ec3484089d5f418816dbdb, type: 3}
