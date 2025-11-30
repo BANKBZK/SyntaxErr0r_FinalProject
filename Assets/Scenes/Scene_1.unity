@@ -11222,6 +11222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4f95f033d20e942af1bad578d37ed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  castPoint: {fileID: 0}
+  skillsSet: []
   skillEffects:
   - {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}
   - {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}

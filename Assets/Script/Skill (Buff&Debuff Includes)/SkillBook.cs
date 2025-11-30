@@ -7,6 +7,7 @@ using System;
 public class SkillBook : MonoBehaviour
 {
     public Transform castPoint; // ไว้กำหนดพวกจุดเกิด Prefab
+
     public event Action<Skill> OnSkillActivated;
     public List<Skill> skillsSet = new List<Skill>();
     public GameObject[] skillEffects;
@@ -18,11 +19,19 @@ public class SkillBook : MonoBehaviour
         // à¾ÔèÁÊ¡ÔÅµèÒ§æ à¢éÒä»ã¹ List
         player = GetComponent<Player>();
 
-        skillsSet.Add(new FireballSkill());
-        skillsSet.Add(new HealSkill());
-        skillsSet.Add(new BuffSkillMoveSpeed());
-        skillsSet.Add(new StrengthBuff());
-        skillsSet.Add(new SlowSkill());
+        // ช็คทุกสกิลในกระเป๋าทุกครั้ง
+        foreach (var skill in skillsSet)
+        {
+            // เช็คว่าช่องนั้นมีสกิลใส่ไว้ไหม (ป้องกัน Error ช่อง None)
+            if (skill != null)
+            {
+                // รีเซ็ตเวลาใช้ล่าสุด
+                skill.lastUsedTime = -9999f;
+
+                // รีเซ็ต timer ด้วย (เผื่อค้าง)
+                skill.timer = 0;
+            }
+        }
     }
 
     void Update()
