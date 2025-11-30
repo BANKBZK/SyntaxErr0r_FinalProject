@@ -15,7 +15,7 @@ public class Character : Identity, Idestoryable
     private int _maxHealth = 100;
     public int Damage = 10;
     public int Deffent = 10;
-    public float movementSpeed;
+    public float movementSpeed = 5f;
     protected Animator animator;
     protected Rigidbody rb;
     Quaternion newRotation;
@@ -23,7 +23,7 @@ public class Character : Identity, Idestoryable
     public event Action<Idestoryable> OnDestory;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public override void SetUP()
+    public virtual void Start()
     {
         base.SetUP();
         health = maxHealth;

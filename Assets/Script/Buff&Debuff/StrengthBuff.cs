@@ -1,8 +1,10 @@
 using System;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "StrengthBuff", menuName = "Skills/StrengthBuff")]
 public class StrengthBuff : Skill
 {
+    [Header("Skill Settings")]
     public int DamageIncrease = 10;
     public int OriginalDamage;
     public int TargetDamage;
@@ -12,6 +14,7 @@ public class StrengthBuff : Skill
         this.skillName = "StrengthBuff";
         this.cooldownTime = 10;
         this.Duration = 5f;
+        this.isFollowPlayer = true;
     }
 
     public override void Activate(Character character)

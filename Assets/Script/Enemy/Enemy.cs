@@ -1,3 +1,4 @@
+﻿using System.Collections;
 using UnityEngine;
 
 public class Enemy : Character
@@ -8,6 +9,40 @@ public class Enemy : Character
     private float TimeToAttack = 1f;
     protected State currentState = State.idel;
     protected float timer = 0f;
+
+    private float originalSpeed;
+    private Coroutine slowCoroutine;
+
+    public override void Start()
+    {
+        base.Start(); // เรียกตัวแม่ Character ให้หา Rigidbody ให้
+
+        originalSpeed = movementSpeed; // จำความเร็วเริ่มต้นจากตัวแม่
+    }
+    public void ApplySlow(float percentage, float duration)
+    {
+        if(slowCoroutine != null)
+        {
+            StopCoroutine(slowCoroutine);
+        }
+        slowCoroutine = StartCoroutine(SlowProcess(percentage, duration));
+    }
+
+    IEnumerator SlowProcess(float percentage, float duration)
+    {
+        // ลดความเร็วเคลื่อนที่ตัวแปรของตัวแม่ตรงๆ
+        movementSpeed = originalSpeed * (1f - percentage);
+        Debug.Log($"{name} speed reduced to: {movementSpeed}");
+
+        yield return new WaitForSeconds(duration);
+
+        // เอาความเร็วปกติคืน ตอนครบเวลา
+        movementSpeed = originalSpeed;
+        Debug.Log("${name} speed restored");
+
+        slowCoroutine = null;
+    }
+
     private void Update()
     {
         if (player == null)
