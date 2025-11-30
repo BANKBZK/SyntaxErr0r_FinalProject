@@ -8512,7 +8512,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
+  m_SoftShadowQuality: 3
 --- !u!108 &1002276192
 Light:
   m_ObjectHideFlags: 0
@@ -8567,7 +8567,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 5000
+  m_ColorTemperature: 3980
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -8586,13 +8586,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1002276190}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.40222108, y: 0.2977267, z: -0.13884978, w: 0.8545747}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1963417642}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 50.366, y: 38.508, z: 0.197}
 --- !u!1 &1006305091
 GameObject:
   m_ObjectHideFlags: 0
@@ -12637,6 +12637,12 @@ MonoBehaviour:
   - Id: stone
     DisplayName: Stone
     Icon: {fileID: 21300000, guid: eafda999f83d2b84b896a5cb0060c9eb, type: 3}
+    MaxStack: 64
+    Type: 0
+    HealAmount: 0
+  - Id: iron
+    DisplayName: Iron
+    Icon: {fileID: 21300000, guid: be3bfbcc21da5e342b946515248809f1, type: 3}
     MaxStack: 64
     Type: 0
     HealAmount: 0
