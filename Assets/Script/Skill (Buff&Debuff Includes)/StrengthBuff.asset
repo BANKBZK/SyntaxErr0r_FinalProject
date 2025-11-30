@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: StrengthBuff
   cooldownTime: 10
-  lastUsedTime: -3.4028235e+38
+  lastUsedTime: -9999
   timer: 0
   isFollowPlayer: 1
   DamageIncrease: 10
-  OriginalDamage: 0
-  TargetDamage: 0
+  OriginalDamage: 25
+  TargetDamage: 35
