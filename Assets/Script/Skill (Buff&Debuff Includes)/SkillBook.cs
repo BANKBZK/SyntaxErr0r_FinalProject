@@ -67,44 +67,52 @@ public class SkillBook : MonoBehaviour
             }
     }
 
+
     public void UseSkill(int index)
     {
-        if (index >= 0 && index < skillsSet.Count)
+        if (index < 0 || index >= skillsSet.Count)
         {
-            Skill skill = skillsSet[index];
-        
-            if (!skill.IsReady(Time.time))
-            {
-                Debug.Log($"Skill '{skill.skillName}' is on cooldown. Time remaining: {skill.lastUsedTime + skill.cooldownTime - Time.time:F2}s");
-                return; // ¨º¡ÒÃ·Ó§Ò¹¶éÒÊ¡ÔÅµÔ´¤ÙÅ´ÒÇ¹ì
-            }
-            Vector3 spawnPosition = (castPoint != null) ? castPoint.position : transform.position;
-            Quaternion spawnRotation = (castPoint != null) ? castPoint.rotation : transform.rotation;
-            GameObject g = Instantiate(skillEffects[index], spawnPosition, spawnRotation);
-
-            if (skill.isFollowPlayer)
-            {
-                if (castPoint != null)
-                {
-                    g.transform.SetParent(castPoint);
-                }
-                else
-                {
-                    g.transform.SetParent(transform);
-                }
-            }
-            Destroy(g, 3);
-            skill.Activate(player);
-            if(skill.timer > 0)
-            OnSkillActivated?.Invoke(skill);
-            skill.TimeStampSkill(Time.time); // ºÑ¹·Ö¡àÇÅÒ·ÕèãªéÊ¡ÔÅ
-            // µÃÇ¨ÊÍºÇèÒà»ç¹Ê¡ÔÅ·ÕèÁÕ¼ÅµèÍà¹×èÍ§ËÃ×ÍäÁè
-            if (skill.timer > 0)
-            {
-                DulationSkills.Add(skill);
-            }
+            Debug.LogWarning($"Invalid skill index: {index}");
+            return;
         }
+        Skill skill = skillsSet[index];
+        if (skill == null)
+        {
+            Debug.LogWarning($"Skill at index {index} is null.");
+            return;
+        }
+        if (skillEffects == null || index >= skillEffects.Length || skillEffects[index] == null)
+        {
+            Debug.LogWarning($"Skill effect for index {index} is missing.");
+            return;
+        }
+        if (player == null)
+        {
+            Debug.LogError("Player reference is missing!");
+            return;
+        }
+        if (!skill.IsReady(Time.time))
+        {
+            Debug.Log($"Skill '{skill.skillName}' is on cooldown.");
+            return;
+        }
+        Vector3 spawnPosition = (castPoint != null) ? castPoint.position : transform.position;
+        Quaternion spawnRotation = (castPoint != null) ? castPoint.rotation : transform.rotation;
+        GameObject g = Instantiate(skillEffects[index], spawnPosition, spawnRotation);
+        if (skill.isFollowPlayer)
+        {
+            g.transform.SetParent(castPoint != null ? castPoint : transform);
+        }
+        Destroy(g, 3);
+        skill.Activate(player);
+        if (skill.timer > 0)
+        {
+            OnSkillActivated?.Invoke(skill);
+            DulationSkills.Add(skill);
+        }
+        skill.TimeStampSkill(Time.time);
     }
+
     private void OnDrawGizmos()
     {
         // Set the gizmo color
