@@ -17025,6 +17025,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: edce829a9c58a8f4db5b1de924112646, type: 3}
     volume: 1
     pitch: 2.5
+  - name: NPC
+    clip: {fileID: 8300000, guid: 015fd9e19671e47498dbe4baf35b6710, type: 3}
+    volume: 1
+    pitch: 1
 --- !u!1 &1564225623
 GameObject:
   m_ObjectHideFlags: 0

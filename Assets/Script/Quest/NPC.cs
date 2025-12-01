@@ -74,6 +74,10 @@ public class NPC : Stuff, IInteractable, IQuestGiver
 
     public void Interact(Player player)
     {
+        if(SoundManager.instance != null)
+        {
+            SoundManager.instance.PlaySFX("NPC");
+        }
         if (!canTalk || _requiredItemDef == null) return;
 
         // ถ้าเควสจบไปแล้ว
