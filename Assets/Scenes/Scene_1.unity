@@ -16778,7 +16778,7 @@ GameObject:
   - component: {fileID: 1557841987}
   - component: {fileID: 1557841981}
   - component: {fileID: 1557841985}
-  - component: {fileID: 1557841984}
+  - component: {fileID: 1557841991}
   - component: {fileID: 1557841983}
   - component: {fileID: 1557841982}
   m_Layer: 5
@@ -16899,22 +16899,6 @@ MonoBehaviour:
     MaxStack: 64
     Type: 0
     HealAmount: 0
---- !u!114 &1557841984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557841980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 103849c5f0fd717479a1a8f8412cea20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
-  sfxSource: {fileID: 0}
-  defaultButtonClick: {fileID: 8300000, guid: 40edb9618b1b7f948a2c4c39a9072df2, type: 3}
-  defaultBackgroundMusic: {fileID: 8300000, guid: 67852d1a25d7e5149a97ba37da3b8116, type: 3}
 --- !u!114 &1557841985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17010,6 +16994,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1557841991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557841980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 103849c5f0fd717479a1a8f8412cea20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSource: {fileID: 0}
+  sfxSource: {fileID: 0}
+  sounds:
+  - name: Pause
+    clip: {fileID: 8300000, guid: f3f4ea46e616d5641b19303e28e01131, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Attack
+    clip: {fileID: 8300000, guid: aa00eb14fe74b3a4882f7a611f4114fd, type: 3}
+    volume: 1
+    pitch: 1
+  - name: PickItem
+    clip: {fileID: 8300000, guid: ee4d404d9827c354595e74aca40bbb43, type: 3}
+    volume: 1
+    pitch: 1
+  - name: UseCraftingTable
+    clip: {fileID: 8300000, guid: edce829a9c58a8f4db5b1de924112646, type: 3}
+    volume: 1
+    pitch: 1
 --- !u!1 &1564225623
 GameObject:
   m_ObjectHideFlags: 0

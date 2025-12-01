@@ -42,8 +42,10 @@ public sealed class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
-            if (pauseSound != null && SoundManager.instance != null)
-                SoundManager.instance.PlaySFX(pauseSound);
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.PlaySFX("Pause");
+            }
         }
     }
 

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory
+public class Inventory 
 {
     public int Capacity { get; private set; }              // จำนวน "สล็อต"
     private readonly List<ItemStack> _slots;
-    public event Action Changed;                           // ให้ UI subscribe
+    public event Action Changed;
 
     public Inventory(int capacity)
     {
@@ -19,6 +19,7 @@ public class Inventory
     /// เพิ่มไอเท็ม คืนค่าจำนวนที่ "เพิ่มได้จริง"
     public int Add(ItemDefinition def, int amount = 1)
     {
+        //SoundManager.instance.PlaySFX();
         if (def == null || amount <= 0) return 0;
 
         int remaining = amount;
@@ -44,6 +45,10 @@ public class Inventory
 
         int added = amount - remaining;
         if (added > 0) Changed?.Invoke();
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.PlaySFX("PickItem");
+        } 
         return added;
     }
 

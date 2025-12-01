@@ -32,6 +32,10 @@ public class CraftingTable : Stuff, IInteractable
         if (isOpen && isUnlock)
         {
             // เปิด UI Crafting และส่ง Inventory + Player เข้าไป
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.PlaySFX("UseCraftingTable");
+            }
             uiCrafting.Open(craftingManager, player.Inventory, player);
         }
     }

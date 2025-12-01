@@ -1,94 +1,71 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using System.Collections.Generic;
+using System;
 
-// °”Àπ¥„ÀÈ‡ªÁπ sealed ‡æ◊ËÕªÈÕß°—π°“√ ◊∫∑Õ¥
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
     [Header("Audio Sources")]
-    // Audio Source  ”À√—∫‡æ≈ßª√–°Õ∫ (Looping)
     public AudioSource musicSource;
-    // Audio Source  ”À√—∫‡Õø‡ø°µÏ‡ ’¬ß (Non-Looping)
     public AudioSource sfxSource;
 
-    [Header("Default Audio Clips")]
-    public AudioClip defaultButtonClick;
-    public AudioClip defaultBackgroundMusic;
+    // --- ‡∏™‡πà‡∏ß‡∏ô‡∏ó‡∏µ‡πà 3: ‡∏ï‡∏±‡∏ß‡πÅ‡∏õ‡∏£ Array ‡∏ó‡∏µ‡πà‡∏´‡∏≤‡∏¢‡πÑ‡∏õ ---
+    [Header("Sound Library")]
+    public Sound[] sounds; // <--- ‡∏ö‡∏£‡∏£‡∏ó‡∏±‡∏î‡∏ô‡∏µ‡πâ‡∏à‡∏∞‡∏ó‡∏≥‡πÉ‡∏´‡πâ‡πÄ‡∏Å‡∏¥‡∏î‡∏•‡∏¥‡∏™‡∏ï‡πå‡πÉ‡∏ô Inspector
 
-    // 3. Singleton Initialization
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            musicSource = gameObject.AddComponent<AudioSource>();
-            sfxSource = gameObject.AddComponent<AudioSource>();   
-            musicSource.loop = true;
             DontDestroyOnLoad(gameObject);
-            PlayMusic(defaultBackgroundMusic);
+
+            if (musicSource == null) musicSource = gameObject.AddComponent<AudioSource>();
+            if (sfxSource == null) sfxSource = gameObject.AddComponent<AudioSource>();
+
+            musicSource.loop = true;
         }
-        else if (instance != this)
+        else
         {
             Destroy(gameObject);
         }
     }
 
-    // ------------------- Music Controls -------------------
-
-    /// <summary>
-    /// ‡≈Ëπ‡æ≈ßª√–°Õ∫„À¡Ë
-    /// </summary>
-    public void PlayMusic(AudioClip clip)
+    // ‡∏ü‡∏±‡∏á‡∏Å‡πå‡∏ä‡∏±‡∏ô‡∏Ñ‡πâ‡∏ô‡∏´‡∏≤‡πÄ‡∏™‡∏µ‡∏¢‡∏á‡∏à‡∏≤‡∏Å‡∏ä‡∏∑‡πà‡∏≠
+    public Sound FindSound(string name)
     {
-        if (clip == null || musicSource == null) return;
+        // ‡∏ï‡πâ‡∏≠‡∏á‡∏°‡∏µ using System; ‡∏ñ‡∏∂‡∏á‡∏à‡∏∞‡πÉ‡∏ä‡πâ Array.Find ‡πÑ‡∏î‡πâ
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+        }
+        return s;
+    }
 
-        musicSource.clip = clip;
+    public void PlaySFX(string name)
+    {
+        Sound s = FindSound(name);
+        if (s == null) return;
+
+        sfxSource.pitch = s.pitch;
+        sfxSource.PlayOneShot(s.clip, s.volume);
+    }
+
+    public void PlayMusic(string name)
+    {
+        Sound s = FindSound(name);
+        if (s == null) return;
+
+        musicSource.clip = s.clip;
+        musicSource.volume = s.volume;
+        musicSource.pitch = s.pitch;
         musicSource.Play();
     }
 
     public void StopMusic()
     {
-        if (musicSource != null)
-        {
-            musicSource.Stop();
-        }
-    }
-
-    // ------------------- SFX Controls -------------------
-
-    /// <summary>
-    /// ‡≈Ëπ‡Õø‡ø°µÏ‡ ’¬ß·∫∫§√—Èß‡¥’¬«®∫ (One-Shot)
-    /// </summary>
-    public void PlaySFX(AudioClip clip)
-    {
-        if (clip == null || sfxSource == null) return;
-
-        // „™È PlayOneShot ‡æ◊ËÕ„ÀÈ‡≈ËπÀ≈“¬‡ ’¬ß∑—∫´ÈÕπ°—π‰¥È
-        sfxSource.PlayOneShot(clip);
-    }
-
-    // ------------------- Volume Controls -------------------
-
-    /// <summary>
-    /// °”Àπ¥√–¥—∫‡ ’¬ßÀ≈—°¢Õß‡æ≈ßª√–°Õ∫ (0.0 ∂÷ß 1.0)
-    /// </summary>
-    public void SetMusicVolume(float volume)
-    {
-        if (musicSource != null)
-        {
-            musicSource.volume = volume;
-        }
-    }
-
-    /// <summary>
-    /// °”Àπ¥√–¥—∫‡ ’¬ßÀ≈—°¢Õß‡Õø‡ø°µÏ‡ ’¬ß (0.0 ∂÷ß 1.0)
-    /// </summary>
-    public void SetSFXVolume(float volume)
-    {
-        if (sfxSource != null)
-        {
-            sfxSource.volume = volume;
-        }
+        musicSource.Stop();
     }
 }
