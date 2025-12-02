@@ -123,25 +123,31 @@ public class KeypadController : Stuff,IInteractable
         isOpen = !isOpen;
         if(isOpen)
         {
-            keyPadPanel.SetActive(true);
-            //player.canMove = false;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            OpenKeypad();
         }
         else
         {
-            keyPadPanel.SetActive(false);
-            //player.canMove = true;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            CloseKeypad();
         }
+    }
+
+    public void CloseKeypad()
+    {
+        keyPadPanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+    public void OpenKeypad()
+    {
+        keyPadPanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     IEnumerator CloseKeypadAfterDelay(Player player)
     {
         yield return new WaitForSeconds(resetInputDelay);
         keyPadPanel.SetActive(false);
         Destroy(gameObject);
-        //player.canMove = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

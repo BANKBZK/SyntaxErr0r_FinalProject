@@ -16,6 +16,7 @@ public sealed class GameManager : MonoBehaviour
 
     public bool isGamePaused = false;
     public GameObject pauseMenuUI;
+    public GameObject looseUi;
 
     private void Awake()
     {
@@ -77,5 +78,16 @@ public sealed class GameManager : MonoBehaviour
         if (hpBar == null) return;
         hpBar.maxValue = maxHealth;
         hpBar.value = currentHealth;
+        if(currentHealth <= 0)
+        {
+            if (looseUi != null)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                looseUi.SetActive(true);
+                Time.timeScale = 0;
+            }
+        }
     }
+
 }
