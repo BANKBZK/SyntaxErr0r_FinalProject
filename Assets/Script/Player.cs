@@ -59,10 +59,10 @@ public class Player : Character
     {
         if (isAttacking) 
         {
-            if (SoundManager.instance != null)
-            {
-                SoundManager.instance.PlaySFX("Attack");
-            }
+            //if (SoundManager.instance != null)
+            //{
+            //    SoundManager.instance.PlaySFX("Attack");
+            //}
             animator.SetTrigger("Attack");
             var e = InFront as Idestoryable;
             if (e != null)

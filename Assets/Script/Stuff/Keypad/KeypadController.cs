@@ -8,6 +8,7 @@ public class KeypadController : Stuff,IInteractable
 {
     float resetInputDelay = 1.2f;
     public Door door;
+    public DoorRotate doorRotate;
     public GameObject keyPadPanel;
     bool isOpen;
     [Header("UI / Display")]
@@ -19,9 +20,6 @@ public class KeypadController : Stuff,IInteractable
 
     private string inputCode = "";
     [SerializeField]private string targetCode = "";
-    public AudioClip wrongcheckSFX;
-    public AudioClip rightcheckSFX;
-    public AudioClip pressSFX;
 
     public bool isInteractable { get => isUnlock; set => isUnlock = value; }
 
@@ -30,12 +28,6 @@ public class KeypadController : Stuff,IInteractable
         //GenerateRandomCode();
         ResetInput();
     }
-
-    private void LateUpdate()
-    {
-        CheckKeyboardInput();
-    }
-
     //void GenerateRandomCode()
     //{
     //    targetCode = "";
@@ -47,17 +39,17 @@ public class KeypadController : Stuff,IInteractable
     //     Debug.Log("Target Code: " + targetCode);
     //} 
 
-    void CheckKeyboardInput()
-    {
-        for (int i = 0; i <= 9; i++)
-        {
-            if (Input.GetKeyDown(i.ToString()))
-            {
-                AddNumber(i.ToString());
-                playOneshotSfx(pressSFX);
-            }
-        }
-    }
+    //void CheckKeyboardInput()
+    //{
+    //    for (int i = 0; i <= 9; i++)
+    //    {
+    //        if (Input.GetKeyDown(i.ToString()))
+    //        {
+    //            AddNumber(i.ToString());
+    //            SoundManager.instance.PlaySFX("KeyPadInput");
+    //        }
+    //    }
+    //}
 
     public void AddNumber(string number)
     {
@@ -65,6 +57,7 @@ public class KeypadController : Stuff,IInteractable
             return;
 
         inputCode += number;
+        SoundManager.instance.PlaySFX("KeyPadInput");
         displayText.text = inputCode;
 
         if (inputCode.Length == codeLength)
@@ -75,16 +68,23 @@ public class KeypadController : Stuff,IInteractable
     {
         if (inputCode == targetCode) //check if corrects
         {
-            playOneshotSfx(rightcheckSFX);
+            SoundManager.instance.PlaySFX("KeyPadUnlock");
             statusImage.color = Color.green;
-            door.isUnlock = true;
+            if(door != null)
+            {
+                door.isUnlock = true;
+            }
+            if (doorRotate != null)
+            {
+                doorRotate.isUnlock = true;
+            }
             StartCoroutine(CloseKeypadAfterDelay(player));
 
 
         }
         else
         {
-            playOneshotSfx(wrongcheckSFX);
+            SoundManager.instance.PlaySFX("KeyPadWrong");
             statusImage.color = Color.red;
         }
 
@@ -95,27 +95,28 @@ public class KeypadController : Stuff,IInteractable
     {
         inputCode = "";
         displayText.text = "----";
-
+        
         // ตั้งเป็นสีเดิม เช่น ขาว หรือโปร่งใส
         statusImage.color = Color.white;
     }
 
     public void ClearCode()
     {
+        SoundManager.instance.PlaySFX("KeyPadWrong");
         ResetInput();
     }
-     void playSfx(AudioClip _sfx)
-    {
-        GetComponent<AudioSource>().clip = _sfx;
-        if (!GetComponent<AudioSource>().isPlaying)
-        {
-            GetComponent<AudioSource>().Play();
-        }
-    }
-    void playOneshotSfx(AudioClip _sfx)
-    {
-        GetComponent<AudioSource>().PlayOneShot(_sfx);
-    }
+    // void playSfx(AudioClip _sfx)
+    //{
+    //    GetComponent<AudioSource>().clip = _sfx;
+    //    if (!GetComponent<AudioSource>().isPlaying)
+    //    {
+    //        GetComponent<AudioSource>().Play();
+    //    }
+    //}
+    //void playOneshotSfx(AudioClip _sfx)
+    //{
+    //    GetComponent<AudioSource>().PlayOneShot(_sfx);
+    //}
 
     public void Interact(Player player)
     {
