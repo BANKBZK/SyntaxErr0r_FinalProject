@@ -11,14 +11,9 @@ public sealed class GameManager : MonoBehaviour
 
     [Header("Game State")]
     public int currentScore = 0;
-    public bool isGamePaused = false;
 
-    [Header("UI References")]
-    [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private Slider hpBar;
 
-    [Header("Audio")]
-    [SerializeField] private AudioClip pauseSound;
 
     private void Awake()
     {
@@ -34,21 +29,7 @@ public sealed class GameManager : MonoBehaviour
 
         // (ไม่บังคับ) ตรวจ refs สำคัญและเตือน
         if (hpBar == null) Debug.LogWarning("[GameManager] HPBar is not assigned.");
-        if (pauseMenuUI == null) Debug.LogWarning("[GameManager] PauseMenuUI is not assigned.");
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePause();
-            if (SoundManager.instance != null)
-            {
-                SoundManager.instance.PlaySFX("Pause");
-            }
-        }
-    }
-
     // ------------------- Gameplay APIs -------------------
 
     public void UpdateHealthBar(int currentHealth, int maxHealth)
@@ -56,12 +37,6 @@ public sealed class GameManager : MonoBehaviour
         if (hpBar == null) return;
         hpBar.maxValue = maxHealth;
         hpBar.value = currentHealth;
-    }
-    public void TogglePause()
-    {
-        isGamePaused = !isGamePaused;
-        Time.timeScale = isGamePaused ? 0 : 1;
-        if (pauseMenuUI != null) pauseMenuUI.SetActive(isGamePaused);
     }
 }
 

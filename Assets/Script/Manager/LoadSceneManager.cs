@@ -1,108 +1,75 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using UnityEngine.UI; // สำหรับ Slider (ถ้ามี)
 
 public class LoadSceneManager : MonoBehaviour
 {
-    // 1. Singleton Instance
     public static LoadSceneManager instance;
 
-    [Header("UI References")]
-    [Tooltip("ลาก Panel ที่เป็นหน้าจอ Loading มาใส่ตรงนี้")]
+    [Header("UI Reference")]
+    [Tooltip("Panel สีดำ หรือรูป Loading ที่อยู่ใน Canvas ลูกของตัวนี้")]
     public GameObject loadingScreenPanel;
 
-    [Tooltip("ลาก Panel Credits มาใส่ช่องนี้ (ถ้ามี)")]
-    public GameObject creditsPanel;
+    [Tooltip("หลอดโหลด (Optional: ถ้าไม่มีปล่อยว่างได้)")]
+    public Slider progressBar;
 
-    // 2. Singleton Initialization
     private void Awake()
     {
+        // Setup Singleton: ให้มีตัวเดียวและห้ามตาย
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if (instance != this)
+        else
         {
             Destroy(gameObject);
         }
     }
 
-    private void Start()
+    public void LoadScene(int sceneIndex)
     {
-        // เริ่มมาให้ซ่อนหน้า Credits ก่อนเสมอ
-        if (creditsPanel != null)
-            creditsPanel.SetActive(false);
-        // เล่นเพลงหน้าเมนู (ต้องมี SoundManager และไฟล์เสียงชื่อ 'BGM_Menu')
-        if (SoundManager.instance != null)
-        {
-            SoundManager.instance.PlayMusic("BGM_Menu");
-        }
+        StartCoroutine(LoadAsync(sceneIndex));
     }
 
-    // ------------------- Loading System -------------------
-
-    /// <summary>
-    /// ใช้กับปุ่ม Start Game: ลากฟังก์ชันนี้ใส่ปุ่ม แล้วกรอกเลข Scene (เช่น 1) ใน Inspector
-    /// </summary>
-    public void LoadNewScene(int sceneIndex)
+    // ฟังก์ชันนี้ Portal จะเรียกใช้ได้ง่ายๆ
+    public void LoadScene(string sceneName)
     {
-        PlayClickSound(); // เล่นเสียงคลิกก่อนโหลด
-        StartCoroutine(LoadSceneCoroutine(sceneIndex));
+        // แปลงชื่อเป็น Index (ถ้าจำเป็น) หรือใช้ LoadSceneAsync(string) ก็ได้
+        // แต่เพื่อความชัวร์ ใช้ Index ดีกว่าถ้าทำได้
+        // ในที่นี้ขอทำแบบรับ string เผื่อ Portal คุณใช้ชื่อฉาก
+        StartCoroutine(LoadAsyncString(sceneName));
     }
 
-    private IEnumerator LoadSceneCoroutine(int sceneIndex)
+    private IEnumerator LoadAsync(int sceneIndex)
     {
+        yield return StartCoroutine(ProcessLoading(SceneManager.LoadSceneAsync(sceneIndex)));
+    }
+
+    private IEnumerator LoadAsyncString(string sceneName)
+    {
+        yield return StartCoroutine(ProcessLoading(SceneManager.LoadSceneAsync(sceneName)));
+    }
+
+    // Logic การโหลดจริงๆ อยู่ตรงนี้ (ใช้ร่วมกันทั้ง int และ string)
+    private IEnumerator ProcessLoading(AsyncOperation operation)
+    {
+        // 1. เปิดหน้าจอโหลด
         if (loadingScreenPanel != null) loadingScreenPanel.SetActive(true);
 
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
-
+        // 2. รอจนโหลดเสร็จ
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
+
+            // อัปเดตหลอดโหลด (ถ้ามี)
+            if (progressBar != null) progressBar.value = progress;
+
             yield return null;
         }
 
+        // 3. ปิดหน้าจอโหลดเมื่อเสร็จ
         if (loadingScreenPanel != null) loadingScreenPanel.SetActive(false);
-
-        Debug.Log($"Scene Index '{sceneIndex}' loaded successfully.");
-    }
-
-    // ------------------- Credits System -------------------
-
-    public void ToggleCredits(bool show)
-    {
-        PlayClickSound();
-        if (creditsPanel != null)
-        {
-            creditsPanel.SetActive(show);
-        }
-    }
-
-    // ------------------- Exit System -------------------
-
-    public void OnExitGameClick()
-    {
-        PlayClickSound();
-        Debug.Log("Quit Game!");
-
-        Application.Quit();
-
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#endif
-    }
-
-    // ------------------- Helper -------------------
-
-    private void PlayClickSound()
-    {
-        if (SoundManager.instance != null)
-        {
-            SoundManager.instance.PlaySFX("Click");
-        }
     }
 }
