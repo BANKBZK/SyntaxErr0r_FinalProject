@@ -13,15 +13,17 @@ public class Enemy : Character
     [SerializeField]
     private float attackRange = 1.5f;
     [Tooltip("ความเร็วในการหันหน้า (ยิ่งเยอะยิ่งหันไว)")]
-    [SerializeField] private float turnSpeed = 15f; // ✅ เพิ่มตัวแปรนี้เพื่อแก้ปัญหาหันช้า
+    [SerializeField] private float turnSpeed = 15f;
 
     [Header("Obstacle Avoidance")]
-    [Tooltip("ระยะเช็คสิ่งกีดขวาง")]
-    [SerializeField] private float obstacleCheckDistance = 4.5f; // ✅ เพิ่มระยะให้เห็นล่วงหน้าเร็วขึ้น
+    [Tooltip("ระยะเช็คสิ่งกีดขวางด้านหน้า")]
+    [SerializeField] private float obstacleCheckDistance = 4.5f;
+    [Tooltip("ระยะเช็คสิ่งกีดขวางด้านข้าง (ควรสั้นกว่าด้านหน้านิดหน่อย)")]
+    [SerializeField] private float sideCheckDistance = 3.5f; // ✅ เพิ่มตัวแปรนี้
     [Tooltip("เลเยอร์ของสิ่งกีดขวาง (เช่น Wall, Tree)")]
     [SerializeField] private LayerMask obstacleLayer;
     [Tooltip("มุมของหนวดแมวซ้ายขวา (องศา)")]
-    [SerializeField] private float whiskerAngle = 45f; // ✅ เพิ่มมุมให้หันหลบชัดเจนขึ้น
+    [SerializeField] private float whiskerAngle = 45f;
 
     protected State currentState = State.idel;
     protected float timer = 0f;
@@ -112,7 +114,7 @@ public class Enemy : Character
         // 1. หาความต้องการเดิม (วิ่งเข้าหา Player ตรงๆ)
         Vector3 desiredDirection = (player.transform.position - transform.position).normalized;
 
-        // 2. คำนวณทิศทางใหม่เพื่อหลบสิ่งกีดขวาง (Whiskers Logic)
+        // 2. คำนวณทิศทางใหม่เพื่อหลบสิ่งกีดขวาง (Whiskers Logic แบบใหม่)
         Vector3 finalDirection = GetDirectionWithAvoidance(desiredDirection);
 
         // 3. สั่งเดินตามทิศทางใหม่
@@ -120,48 +122,65 @@ public class Enemy : Character
         Move(finalDirection);
     }
 
-    // ✅ ฟังก์ชันคำนวณการหลบหลีก
+    // ✅ ฟังก์ชันคำนวณการหลบหลีก (ปรับปรุงใหม่ แก้ปัญหาเดินส่าย)
     private Vector3 GetDirectionWithAvoidance(Vector3 targetDir)
     {
         Vector3 startPos = transform.position + Vector3.up * 0.5f;
 
-        // ยิง Ray ตรงกลาง
-        bool hitFront = Physics.Raycast(startPos, transform.forward, obstacleCheckDistance, obstacleLayer);
+        // ทิศทางของหนวดแมว
+        Vector3 forward = transform.forward;
+        Vector3 leftDir = Quaternion.Euler(0, -whiskerAngle, 0) * forward;
+        Vector3 rightDir = Quaternion.Euler(0, whiskerAngle, 0) * forward;
+
+        // ยิง Ray 3 เส้นเสมอ
+        bool hitFront = Physics.Raycast(startPos, forward, obstacleCheckDistance, obstacleLayer);
+        bool hitLeft = Physics.Raycast(startPos, leftDir, sideCheckDistance, obstacleLayer);
+        bool hitRight = Physics.Raycast(startPos, rightDir, sideCheckDistance, obstacleLayer);
 
         if (hitFront)
         {
-            // ถ้าข้างหน้าตัน ให้ลองเช็คซ้ายขวา
-            Vector3 leftDir = Quaternion.Euler(0, -whiskerAngle, 0) * transform.forward;
-            Vector3 rightDir = Quaternion.Euler(0, whiskerAngle, 0) * transform.forward;
-
-            bool hitLeft = Physics.Raycast(startPos, leftDir, obstacleCheckDistance, obstacleLayer);
-            bool hitRight = Physics.Raycast(startPos, rightDir, obstacleCheckDistance, obstacleLayer);
-
+            // --- กรณีข้างหน้าตัน (ต้องเลี้ยวหลบ) ---
             if (!hitLeft && !hitRight)
             {
-                // ✅ ถ้าว่างทั้งคู่ ให้เลือกทางที่ "ใกล้เคียงกับทิศทางผู้เล่น" มากที่สุด
-                // (แบบเดิมคือบังคับขวา ทำให้บางทีมันเดินอ้อมโลก)
-                float dotLeft = Vector3.Dot(leftDir, targetDir);
-                float dotRight = Vector3.Dot(rightDir, targetDir);
-
-                return dotLeft > dotRight ? leftDir : rightDir;
+                // ว่างทั้งคู่ -> ไปทางที่ใกล้ Player ที่สุด
+                return Vector3.Dot(leftDir, targetDir) > Vector3.Dot(rightDir, targetDir) ? leftDir : rightDir;
             }
-            else if (!hitLeft)
-            {
-                return leftDir; // ซ้ายว่าง ไปซ้าย
-            }
-            else if (!hitRight)
-            {
-                return rightDir; // ขวาว่าง ไปขวา
-            }
+            else if (!hitLeft) return leftDir; // ซ้ายว่างไปซ้าย
+            else if (!hitRight) return rightDir; // ขวาว่างไปขวา
             else
             {
-                // ถ้าตันหมด ให้หันขวา 90 องศาเลย (หักหลบแรงๆ)
-                return Quaternion.Euler(0, 90, 0) * transform.forward;
+                // ตันทุกทาง -> กลับหลังหัน หรือหักหลบ 90 องศา
+                return Quaternion.Euler(0, 90, 0) * forward;
+            }
+        }
+        else
+        {
+            // --- กรณีข้างหน้าโล่ง (แต่วัดใจด้านข้างด้วย) ---
+            // ปัญหาเดิมคือพอหน้าโล่ง มันรีบเลี้ยวกลับหา Player เลยทำให้ไหล่ไปชนกำแพง
+            // วิธีแก้: ถ้าด้านข้างยังติดกำแพงอยู่ ให้ "ดัน" ตัวเองออกห่างจากกำแพงนั้น
+
+            Vector3 avoidancePush = Vector3.zero;
+
+            if (hitLeft)
+            {
+                // ชนซ้าย -> ดันไปขวา (ใช้ transform.right)
+                avoidancePush += transform.right;
+            }
+            if (hitRight)
+            {
+                // ชนขวา -> ดันไปซ้าย (ใช้ -transform.right)
+                avoidancePush -= transform.right;
+            }
+
+            if (avoidancePush != Vector3.zero)
+            {
+                // เอาทิศทางที่อยากไป (targetDir) ผสมกับ แรงผลักหนีกำแพง (avoidancePush)
+                // ยิ่งคูณเยอะ ยิ่งผลักแรง (เช่น 1.5f)
+                return (targetDir + avoidancePush * 1.5f).normalized;
             }
         }
 
-        // ถ้าข้างหน้าไม่ตัน ก็ไปตามทางเดิมที่อยากไป (หา Player)
+        // ถ้าโล่งหมดทุกทาง ก็ไปหา Player ตรงๆ
         return targetDir;
     }
 
@@ -211,13 +230,20 @@ public class Enemy : Character
 
         // ✅ วาดเส้น Whiskers ให้เห็นใน Editor
         Vector3 startPos = transform.position + Vector3.up * 0.5f;
-        Gizmos.color = Color.cyan;
+
+        // เส้นหน้า (สีฟ้า)
+        Gizmos.color = hitFrontGizmo ? Color.red : Color.cyan;
         Gizmos.DrawLine(startPos, startPos + transform.forward * obstacleCheckDistance);
 
-        Gizmos.color = Color.blue;
+        // เส้นข้าง (สีน้ำเงิน) - คำนวณใหม่เพื่อให้วาดถูกต้อง
         Vector3 leftDir = Quaternion.Euler(0, -whiskerAngle, 0) * transform.forward;
         Vector3 rightDir = Quaternion.Euler(0, whiskerAngle, 0) * transform.forward;
-        Gizmos.DrawLine(startPos, startPos + leftDir * obstacleCheckDistance);
-        Gizmos.DrawLine(startPos, startPos + rightDir * obstacleCheckDistance);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(startPos, startPos + leftDir * sideCheckDistance);
+        Gizmos.DrawLine(startPos, startPos + rightDir * sideCheckDistance);
     }
+
+    // ตัวแปรสำหรับ Debug Gizmos (ไม่ส่งผลต่อเกม)
+    private bool hitFrontGizmo = false;
 }
