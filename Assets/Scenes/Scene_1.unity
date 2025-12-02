@@ -24532,7 +24532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5068865387062160124, guid: 6bb8a277863fa494f9796d6151598c88, type: 3}
       propertyPath: completeDesc
-      value: Thank You. Here Your Reward
+      value: Thank You.
       objectReference: {fileID: 0}
     - target: {fileID: 5068865387062160124, guid: 6bb8a277863fa494f9796d6151598c88, type: 3}
       propertyPath: rewardAmount
