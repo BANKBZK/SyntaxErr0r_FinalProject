@@ -18738,6 +18738,11 @@ MonoBehaviour:
   TimeToAttack: 2
   detectionRange: 5
   attackRange: 1.5
+  obstacleCheckDistance: 3
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  whiskerAngle: 30
 --- !u!54 &993801851
 Rigidbody:
   m_ObjectHideFlags: 0
