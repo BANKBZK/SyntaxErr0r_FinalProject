@@ -21,10 +21,18 @@ public class DoorRotate : Stuff, IInteractable
         if (isOpen)
         {
             doorAnimation.SetBool("DoorOpen", isOpen);
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.PlaySFX("DoorOpen");
+            }
         }
         else
         {
             doorAnimation.SetBool("DoorOpen", isOpen);
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.PlaySFX("DoorClose");
+            }
         }
         isOpen = !isOpen;
     }

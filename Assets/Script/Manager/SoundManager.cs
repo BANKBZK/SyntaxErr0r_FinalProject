@@ -31,7 +31,10 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+    private void Start()
+    {
+        PlayMusic("BGM");
+    }
     // ฟังก์ชันค้นหาเสียงจากชื่อ
     public Sound FindSound(string name)
     {

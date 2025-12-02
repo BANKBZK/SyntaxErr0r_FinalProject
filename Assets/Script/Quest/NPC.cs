@@ -8,7 +8,8 @@ public class NPC : Stuff, IInteractable, IQuestGiver
     public enum NPCType
     {
         GiveItem,       // แบบที่ 1: ให้ของรางวัลกับผู้เล่น
-        UnlockObject    // แบบที่ 2: ปลดล็อคประตู/กล่อง
+        UnlockObject,   // แบบที่ 2: ปลดล็อคประตู/กล่อง
+        SetActiveObject // แบบที่ 3: (ใหม่) สั่งเปิด/ปิด GameObject
     }
 
     [Header("NPC Settings")]
@@ -20,13 +21,21 @@ public class NPC : Stuff, IInteractable, IQuestGiver
     public int requiredAmount = 1;
 
     [Header("Reward Type 1: Give Item")]
-    [Tooltip("ID ของรางวัลที่จะให้ผู้เล่น (ถ้าเลือกโหมด GiveItem)")]
+    [Tooltip("ID ของรางวัลที่จะให้ผู้เล่น")]
     public string rewardItemId;
     public int rewardAmount = 1;
 
     [Header("Reward Type 2: Unlock Object")]
     [Tooltip("ลากประตู หรือ Stuff ที่ต้องการปลดล็อคมาใส่ตรงนี้")]
     public Stuff objectToUnlock;
+
+    // --- ส่วนที่เพิ่มใหม่สำหรับ Type 3 ---
+    [Header("Reward Type 3: Set Active Object")]
+    [Tooltip("ลาก GameObject ที่อยากให้ เปิด หรือ ปิด มาใส่")]
+    public GameObject objectToToggle;
+    [Tooltip("ติ๊กถูก = สั่งเปิด (Active), ติ๊กออก = สั่งปิด (Inactive)")]
+    public bool targetActiveState = true;
+    // ----------------------------------
 
     [Header("Dialogs")]
     public string questDesc = "I need a key.";
@@ -36,7 +45,7 @@ public class NPC : Stuff, IInteractable, IQuestGiver
     // Internal Variables
     private Quest currentQuest;
     private ItemDefinition _requiredItemDef;
-    private ItemDefinition _rewardItemDef; // สำหรับโหมดให้ของ
+    private ItemDefinition _rewardItemDef;
     public bool canTalk = true;
     public bool isInteractable { get => canTalk; set => canTalk = value; }
 
@@ -68,31 +77,30 @@ public class NPC : Stuff, IInteractable, IQuestGiver
         else
         {
             Debug.LogError($"[NPC] หาไอเท็ม ID '{requiredItemId}' ไม่เจอ!");
-            canTalk = false; // ปิดการคุยถ้าข้อมูลผิด
+            canTalk = false;
         }
     }
 
     public void Interact(Player player)
     {
-        if(SoundManager.instance != null)
+        if (SoundManager.instance != null)
         {
             SoundManager.instance.PlaySFX("NPC");
         }
+
         if (!canTalk || _requiredItemDef == null) return;
 
-        // ถ้าเควสจบไปแล้ว
         if (currentQuest.isCompleted)
         {
             ShowDialog(completeDesc);
             return;
         }
 
-        // ถ้ารับเควสแล้ว -> เช็คของเพื่อส่งเควส
         if (currentQuest.isActive)
         {
             CheckAndCompleteQuest(player);
         }
-        else // ยังไม่รับเควส -> รับเควส
+        else
         {
             StartQuest(currentQuest);
             ShowDialog($"{currentQuest.description}\n(Need: {requiredAmount} {_requiredItemDef.DisplayName})");
@@ -108,13 +116,8 @@ public class NPC : Stuff, IInteractable, IQuestGiver
 
         if (count >= requiredAmount)
         {
-            // 1. ลบของจากตัวผู้เล่น (ของที่ NPC อยากได้)
             playerInv.Remove(_requiredItemDef, requiredAmount);
-
-            // 2. ให้รางวัลตามประเภท NPC
-            GiveReward(player);
-
-            // 3. จบเควส
+            GiveReward(player); // เรียกฟังก์ชันให้รางวัล
             CompleteQuest(currentQuest);
         }
         else
@@ -125,35 +128,48 @@ public class NPC : Stuff, IInteractable, IQuestGiver
 
     private void GiveReward(Player player)
     {
-        if (npcType == NPCType.GiveItem)
+        switch (npcType)
         {
-            // แบบที่ 1: ให้ของ
-            if (_rewardItemDef != null)
-            {
-                player.Inventory.Add(_rewardItemDef, rewardAmount);
-                ShowDialog($"Here is your {_rewardItemDef.DisplayName}!");
-            }
-        }
-        else if (npcType == NPCType.UnlockObject)
-        {
-            // แบบที่ 2: ปลดล็อค Stuff (ประตู)
-            if (objectToUnlock != null)
-            {
-                objectToUnlock.isUnlock = true; // สั่งปลดล็อคตรงนี้!
-                ShowDialog("The door is unlocked now!");
+            case NPCType.GiveItem:
+                if (_rewardItemDef != null)
+                {
+                    player.Inventory.Add(_rewardItemDef, rewardAmount);
+                    ShowDialog($"Here is your {_rewardItemDef.DisplayName}!");
+                }
+                break;
 
-                // Optional: ถ้าเป็นประตู อยากให้สั่งเปิดเลยไหม? 
-                // ถ้าอยากให้เปิดเลย ให้ Cast เป็น Door แล้วสั่ง Interact ก็ได้
-                // แต่ปกติแค่ปลดล็อคให้ผู้เล่นไปกดเปิดเองจะดีกว่า
-            }
-            else
-            {
-                Debug.LogWarning("[NPC] ลืมลาก objectToUnlock มาใส่ใน Inspector!");
-            }
+            case NPCType.UnlockObject:
+                if (objectToUnlock != null)
+                {
+                    objectToUnlock.isUnlock = true;
+                    ShowDialog("The door is unlocked now!");
+                }
+                else
+                {
+                    Debug.LogWarning("[NPC] ลืมลาก objectToUnlock มาใส่ใน Inspector!");
+                }
+                break;
+
+            // --- ส่วน Logic ใหม่ของ Type 3 ---
+            case NPCType.SetActiveObject:
+                if (objectToToggle != null)
+                {
+                    // สั่งเปิดหรือปิดตามที่ตั้งค่าไว้
+                    objectToToggle.SetActive(targetActiveState);
+
+                    // ปรับคำพูดให้เข้ากับสถานการณ์
+                    string stateText = targetActiveState ? "activated" : "deactivated";
+                    ShowDialog($"Mechanism has been {stateText}!");
+                }
+                else
+                {
+                    Debug.LogWarning("[NPC] ลืมลาก objectToToggle มาใส่ใน Inspector!");
+                }
+                break;
+                // --------------------------------
         }
     }
 
-    // Override Update เพื่อแก้บั๊ก UI ซ้อนกัน (จากโค้ดชุดก่อน)
     public override void Update()
     {
         bool isTalking = WordTextUI.gameObject.activeSelf;
