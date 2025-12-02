@@ -51,10 +51,12 @@ public class SkillBook : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             UseSkill(3); // (Attack Damage Buff)
+            if (SoundManager.instance != null) SoundManager.instance.PlaySFX("StrengthSkill");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             UseSkill(4); // Slow Enemy(S)
+            if (SoundManager.instance != null) SoundManager.instance.PlaySFX("SlowSkill");
         }
             // ÍÑ»à´µÊ¡ÔÅ·ÕèÁÕ¼ÅµèÍà¹×èÍ§
             for (int i = DulationSkills.Count - 1; i >= 0; i--)

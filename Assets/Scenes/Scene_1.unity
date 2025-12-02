@@ -30102,6 +30102,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 1f6ecad839177e44eb8d5dd77021bb59, type: 3}
     volume: 1
     pitch: 1
+  - name: StrengthSkill
+    clip: {fileID: 8300000, guid: f0f6efc9449b182499be2add8e8adaf6, type: 3}
+    volume: 1
+    pitch: 1
+  - name: SlowSkill
+    clip: {fileID: 8300000, guid: 1ed90348da44d9a458fe28b384080cff, type: 3}
+    volume: 1
+    pitch: 1
 --- !u!1001 &1562581612
 PrefabInstance:
   m_ObjectHideFlags: 0
