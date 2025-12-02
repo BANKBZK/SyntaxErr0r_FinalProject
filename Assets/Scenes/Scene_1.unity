@@ -18735,7 +18735,7 @@ MonoBehaviour:
   Damage: 10
   Deffent: 10
   movementSpeed: 3
-  TimeToAttack: 1.5
+  TimeToAttack: 2
   detectionRange: 5
   attackRange: 1.5
 --- !u!54 &993801851
@@ -25758,7 +25758,7 @@ MonoBehaviour:
   _health: 0
   _maxHealth: 100
   Damage: 25
-  Deffent: 10
+  Deffent: 0
   movementSpeed: 3
   uiInventory: {fileID: 707331233}
   RightHand: {fileID: 1395758040}
