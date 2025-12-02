@@ -14,6 +14,8 @@ public sealed class GameManager : MonoBehaviour
 
     [SerializeField] private Slider hpBar;
 
+    public bool isGamePaused = false;
+    public GameObject pauseMenuUI;
 
     private void Awake()
     {
@@ -30,6 +32,44 @@ public sealed class GameManager : MonoBehaviour
         // (ไม่บังคับ) ตรวจ refs สำคัญและเตือน
         if (hpBar == null) Debug.LogWarning("[GameManager] HPBar is not assigned.");
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.PlaySFX("Pause");
+            }
+        }
+    }
+
+    public void TogglePause()
+    {
+        isGamePaused = !isGamePaused;
+
+        // 1. หยุด/เดิน เวลา
+        Time.timeScale = isGamePaused ? 0 : 1;
+
+        // 2. เปิด/ปิด หน้าต่าง UI
+        if (pauseMenuUI != null) pauseMenuUI.SetActive(isGamePaused);
+
+        // 3. ✅ จัดการเมาส์ (เพิ่มใหม่)
+        if (isGamePaused)
+        {
+            // ถ้าหยุดเกม -> โชว์เมาส์ให้กดเมนูได้
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            // ถ้าเล่นต่อ -> ซ่อนเมาส์และล็อคไว้กลางจอ
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
     // ------------------- Gameplay APIs -------------------
 
     public void UpdateHealthBar(int currentHealth, int maxHealth)
@@ -39,7 +79,3 @@ public sealed class GameManager : MonoBehaviour
         hpBar.value = currentHealth;
     }
 }
-
-    // ------------------- Item Database Lookup -------------------
-
-    
