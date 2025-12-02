@@ -24867,6 +24867,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1452839600352266185, guid: 75337ccc95d96ee42bf8ad3d1e9b4424, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1726417463798748427, guid: 75337ccc95d96ee42bf8ad3d1e9b4424, type: 3}
       propertyPath: m_Name
       value: Door2InteractZone
