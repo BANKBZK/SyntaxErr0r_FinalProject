@@ -12,6 +12,8 @@ public sealed class GameManager : MonoBehaviour
     [Header("Game State")]
     public int currentScore = 0;
 
+    [Header("UI References")]
+    [Tooltip("ลาก Slider หลอดเลือดมาใส่ (หรือตั้ง Tag 'HPBar' ให้ Slider เพื่อให้หาเจอเอง)")]
     [SerializeField] private Slider hpBar;
 
     public bool isGamePaused = false;
@@ -29,9 +31,6 @@ public sealed class GameManager : MonoBehaviour
 
         // ✅ คงอยู่ข้ามซีน
         DontDestroyOnLoad(gameObject);
-
-        // (ไม่บังคับ) ตรวจ refs สำคัญและเตือน
-        if (hpBar == null) Debug.LogWarning("[GameManager] HPBar is not assigned.");
     }
 
     private void Update()
@@ -56,7 +55,7 @@ public sealed class GameManager : MonoBehaviour
         // 2. เปิด/ปิด หน้าต่าง UI
         if (pauseMenuUI != null) pauseMenuUI.SetActive(isGamePaused);
 
-        // 3. ✅ จัดการเมาส์ (เพิ่มใหม่)
+        // 3. จัดการเมาส์
         if (isGamePaused)
         {
             // ถ้าหยุดเกม -> โชว์เมาส์ให้กดเมนูได้
@@ -65,9 +64,12 @@ public sealed class GameManager : MonoBehaviour
         }
         else
         {
-            // ถ้าเล่นต่อ -> ซ่อนเมาส์และล็อคไว้กลางจอ
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            // ถ้าเล่นต่อ -> ซ่อนเมาส์ (เฉพาะถ้าหน้าแพ้ไม่เปิดอยู่)
+            if (looseUi == null || !looseUi.activeSelf)
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 
@@ -75,19 +77,30 @@ public sealed class GameManager : MonoBehaviour
 
     public void UpdateHealthBar(int currentHealth, int maxHealth)
     {
+        // 1. ถ้าหา HP Bar ไม่เจอ (เช่น เพิ่งเปลี่ยนฉาก) ให้ลองค้นหาจาก Tag "HPBar"
+        if (hpBar == null)
+        {
+            GameObject go = GameObject.FindGameObjectWithTag("HPBar");
+            if (go != null) hpBar = go.GetComponent<Slider>();
+        }
+
+        // 2. ถ้ายังไม่เจออีก ก็จบข่าว (แปลว่าลืมวาง Slider หรือลืมติด Tag)
         if (hpBar == null) return;
+
+        // 3. อัปเดตค่า
         hpBar.maxValue = maxHealth;
         hpBar.value = currentHealth;
-        if(currentHealth <= 0)
+
+        // 4. เช็คเงื่อนไขแพ้
+        if (currentHealth <= 0)
         {
-            if (looseUi != null)
+            if (looseUi != null && !looseUi.activeSelf)
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 looseUi.SetActive(true);
-                Time.timeScale = 0;
+                Time.timeScale = 0; // หยุดเกมเมื่อตาย
             }
         }
     }
-
 }

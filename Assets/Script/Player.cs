@@ -6,24 +6,30 @@ public class Player : Character
     public Inventory Inventory { get; private set; }
     public UIInventory uiInventory;
 
-
     [Header("Hand setting")]
     public Transform RightHand;
     public Transform LeftHand;
-    public AudioClip addItem; //Here
-    public AudioClip onAttack; //Here
+    public AudioClip addItem;
+    public AudioClip onAttack;
 
     Vector3 _inputDirection;
     bool _isAttacking = false;
     bool _isInteract = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
-        health = maxHealth;
+        // สร้าง Inventory เตรียมไว้ก่อน Start
+        Inventory = new Inventory(10);
+    }
+
+    public override void Start()
+    {
+        base.Start(); // เรียก Character.Start() เพื่อ SetUP ค่าต่างๆ
+
+        // ผูก Inventory เข้ากับ UI
         if (uiInventory != null) uiInventory.Bind(Inventory);
 
+        // ✅ อัปเดตเลือดเริ่มเกมทันที
         GameManager.Instance?.UpdateHealthBar(health, maxHealth);
     }
 
@@ -34,73 +40,72 @@ public class Player : Character
         Attack(_isAttacking);
         Interact(_isInteract);
     }
+
     public void Update()
     {
         HandleInput();
         if (Input.GetKeyDown(KeyCode.I)) uiInventory?.Toggle();
     }
-    
+
     private void HandleInput()
     {
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
         _inputDirection = new Vector3(x, 0, y);
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0))
+        {
             _isAttacking = true;
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             _isInteract = true;
         }
-
     }
-    public void Attack(bool isAttacking) 
+
+    public void Attack(bool isAttacking)
     {
-        if (isAttacking) 
+        if (isAttacking)
         {
-            //if (SoundManager.instance != null)
-            //{
-            //    SoundManager.instance.PlaySFX("Attack");
-            //}
             animator.SetTrigger("Attack");
             var e = InFront as Idestoryable;
             if (e != null)
             {
                 e.TakeDamage(Damage);
-                
                 Debug.Log($"{gameObject.name} attacks for {Damage} damage.");
             }
             _isAttacking = false;
         }
     }
+
     private void Interact(bool interactable)
     {
         if (interactable)
         {
             IInteractable e = InFront as IInteractable;
-            if (e != null) {
+            if (e != null)
+            {
                 e.Interact(this);
             }
             _isInteract = false;
-
         }
     }
-    
-    private void Awake()
-    {
-        Inventory = new Inventory(10); // กำหนดความจุเริ่มต้น
-    }
+
+    // ------------------- Override ส่วนที่สำคัญ -------------------
 
     public override void TakeDamage(int amount)
     {
-        base.TakeDamage(amount);
-        GameManager.Instance.UpdateHealthBar(health, maxHealth);
+        base.TakeDamage(amount); // ลดเลือดจริงในตัวแปร health
+
+        // ✅ ส่งค่าไปอัปเดตหลอดเลือดที่ GameManager
+        GameManager.Instance?.UpdateHealthBar(health, maxHealth);
     }
+
     public override void Heal(int amount)
     {
         base.Heal(amount);
-        GameManager.Instance.UpdateHealthBar(health, maxHealth);
-    }
 
+        // ✅ ส่งค่าไปอัปเดตหลอดเลือดที่ GameManager
+        GameManager.Instance?.UpdateHealthBar(health, maxHealth);
+    }
 }
