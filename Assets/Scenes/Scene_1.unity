@@ -30211,19 +30211,19 @@ MonoBehaviour:
     volume: 1
     pitch: 1
   - name: KeyPadInput
-    clip: {fileID: 8300000, guid: 5c7b150408e533b4388df9ae804f7f08, type: 3}
+    clip: {fileID: 8300000, guid: 10e7bb8c00e530a4f995ab0a0f7d8044, type: 3}
     volume: 1
     pitch: 1
   - name: KeyPadWrong
-    clip: {fileID: 8300000, guid: 5c7b150408e533b4388df9ae804f7f08, type: 3}
+    clip: {fileID: 8300000, guid: c492ba47b8443b046992520fb2ccec30, type: 3}
     volume: 1
     pitch: 1
   - name: KeyPadUnlock
-    clip: {fileID: 8300000, guid: 5c7b150408e533b4388df9ae804f7f08, type: 3}
+    clip: {fileID: 8300000, guid: ddf7f4d468265c84a81afb1acb145485, type: 3}
     volume: 1
     pitch: 1
   - name: Portal
-    clip: {fileID: 8300000, guid: edce829a9c58a8f4db5b1de924112646, type: 3}
+    clip: {fileID: 8300000, guid: 1f6ecad839177e44eb8d5dd77021bb59, type: 3}
     volume: 1
     pitch: 1
 --- !u!1001 &1562581612
