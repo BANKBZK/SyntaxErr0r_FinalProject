@@ -16995,6 +16995,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 5555b00bc05a3614eb16f162ad45ee0b, type: 3}
     volume: 1
     pitch: 1
+  - name: DoorLock
+    clip: {fileID: 8300000, guid: 5c7b150408e533b4388df9ae804f7f08, type: 3}
+    volume: 1
+    pitch: 1
 --- !u!1 &1564225623
 GameObject:
   m_ObjectHideFlags: 0

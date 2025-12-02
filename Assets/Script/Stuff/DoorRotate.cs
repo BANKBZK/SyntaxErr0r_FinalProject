@@ -16,6 +16,10 @@ public class DoorRotate : Stuff, IInteractable
         if (!isUnlock)
         {
             Debug.Log("The door is locked.");
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.PlaySFX("DoorLock");
+            }
             return;
         }
         if (isOpen)
