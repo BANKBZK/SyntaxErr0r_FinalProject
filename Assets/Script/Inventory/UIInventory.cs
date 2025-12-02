@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -24,6 +23,10 @@ public class UIInventory : MonoBehaviour
         player = playerRef ?? FindAnyPlayer();
 
         if (panelRoot != null) panelRoot.SetActive(false);
+
+        // ✅ เริ่มเกม: ซ่อนเมาส์ทันที (เพราะ Inventory ปิดอยู่)
+        UpdateCursorState(false);
+
         Refresh();
     }
 
@@ -31,9 +34,32 @@ public class UIInventory : MonoBehaviour
     {
         bool show = !panelRoot.activeSelf;
         panelRoot.SetActive(show);
+
+        // ✅ เรียกใช้ฟังก์ชันจัดการเมาส์ตามสถานะ show
+        UpdateCursorState(show);
+
         if (!show) SetSelected(null);
         if (show) Refresh();
     }
+
+    // ---------------- Cursor Logic ----------------
+    // ฟังก์ชันช่วยจัดการเมาส์ (แยกออกมาให้ดูง่าย)
+    private void UpdateCursorState(bool isOpen)
+    {
+        if (isOpen)
+        {
+            // ถ้าเปิดกระเป๋า: โชว์เมาส์ + ปลดล็อคให้ขยับไปกดของได้
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            // ถ้าปิดกระเป๋า: ซ่อนเมาส์ + ล็อคไว้กลางจอ (สำหรับมุมมอง FPS/TPS)
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+    // ---------------------------------------------
 
     private void OnDestroy()
     {
@@ -54,14 +80,13 @@ public class UIInventory : MonoBehaviour
             var view = pool[i].GetComponent<SlotView>();
             var stack = inv.Slots[i];
 
-            // ส่ง predicate: เงื่อนไขเดียวกับ TryUseItem
             view.Set(stack, IsUsableItem);
 
             view.OnSelected = v => SetSelected(v);
             view.OnUse = s => TryUseItem(s);
         }
 
-        SetSelected(null); // reset selection หลัง refresh
+        SetSelected(null);
     }
 
     private void EnsurePool(int needed)
@@ -86,19 +111,13 @@ public class UIInventory : MonoBehaviour
     {
         if (stack.Def == null || stack.Amount <= 0) return false;
 
-
         switch (stack.Def.Type)
         {
             case ItemType.Heal:
                 return stack.Def.HealAmount > 0;
-
-            //case ItemType.SpeedBuff:
-            //    return stack.Def.SpeedMultiplier > 1f && stack.Def.Duration > 0f;
-
             default:
                 return false;
         }
-
     }
 
     private void TryUseItem(ItemStack stack)
@@ -106,23 +125,17 @@ public class UIInventory : MonoBehaviour
         if (!IsUsableItem(stack)) return;
 
         var def = stack.Def;
-        if (!inv.Remove(def, 1)) return; // consume 1
+        if (!inv.Remove(def, 1)) return;
 
         switch (def.Type)
         {
             case ItemType.Heal:
                 player?.Heal(def.HealAmount);
                 break;
-
-            //case ItemType.SpeedBuff:
-            //    player?.ApplySpeedBuff(def.SpeedMultiplier, def.Duration); 
-            //    break;
         }
 
-        // ปิดปุ่มหลังใช้
         SetSelected(null);
     }
-
 
     private Player FindAnyPlayer()
     {

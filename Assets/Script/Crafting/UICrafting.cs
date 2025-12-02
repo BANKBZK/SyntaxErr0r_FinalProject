@@ -24,6 +24,13 @@ public class UICrafting : MonoBehaviour
         player = playerRef;
 
         panelRoot.SetActive(true);
+
+        // ✅ เปิดหน้าต่าง -> โชว์เมาส์
+        UpdateCursorState(true);
+
+        // (Optional) เล่นเสียงเปิด
+        if (SoundManager.instance != null) SoundManager.instance.PlaySFX("OpenMenu");
+
         RebuildList();
     }
 
@@ -33,8 +40,25 @@ public class UICrafting : MonoBehaviour
     public void Close()
     {
         panelRoot.SetActive(false);
+        UpdateCursorState(false);
         ClearList();
     }
+
+    // ---------------- Cursor Logic ----------------
+    private void UpdateCursorState(bool isOpen)
+    {
+        if (isOpen)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None; // ขยับเมาส์ได้อิสระ
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked; // ล็อคเป้ากลางจอ
+        }
+    }
+    // ---------------------------------------------
 
     private void ClearList()
     {
@@ -69,8 +93,6 @@ public class UICrafting : MonoBehaviour
                     RebuildList();
                 }
             };
-
-            // (ทางเลือก) ถ้าคุณมีภาพรวมของจำนวนใน inventory ก็สามารถ subscribe inv.Changed แล้วเรียก RebuildList() อัตโนมัติ
         }
     }
 }
