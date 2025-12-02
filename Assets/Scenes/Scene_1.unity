@@ -24674,6 +24674,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door2InteractZone
       objectReference: {fileID: 0}
+    - target: {fileID: 2293105255139118549, guid: 75337ccc95d96ee42bf8ad3d1e9b4424, type: 3}
+      propertyPath: isUnlock
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
