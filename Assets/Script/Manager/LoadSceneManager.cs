@@ -1,16 +1,23 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement; //  ”§—≠¡“° ”À√—∫ Scene Management
+using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class LoadSceneManager : MonoBehaviour
 {
     // 1. Singleton Instance
-   public static LoadSceneManager instance;
+    public static LoadSceneManager instance;
 
-    [Header("Loading Screen Reference")]
-    public GameObject loadingScreenPanel; // ÕÈ“ßÕ‘ß∂÷ß Panel ∑’Ë„™È‡ªÁπÀπÈ“®Õ‚À≈¥
+    [Header("UI References")]
+    [Tooltip("‡∏•‡∏≤‡∏Å Panel ‡∏ó‡∏µ‡πà‡πÄ‡∏õ‡πá‡∏ô‡∏´‡∏ô‡πâ‡∏≤‡∏à‡∏≠ Loading ‡∏°‡∏≤‡πÉ‡∏™‡πà‡∏ï‡∏£‡∏á‡∏ô‡∏µ‡πâ")]
+    public GameObject loadingScreenPanel;
 
-    // 3. Singleton Initialization
+    [Tooltip("‡∏•‡∏≤‡∏Å Panel Credits ‡∏°‡∏≤‡πÉ‡∏™‡πà‡∏ä‡πà‡∏≠‡∏á‡∏ô‡∏µ‡πâ (‡∏ñ‡πâ‡∏≤‡∏°‡∏µ)")]
+    public GameObject creditsPanel;
+
+    // 2. Singleton Initialization
     private void Awake()
     {
         if (instance == null)
@@ -24,71 +31,78 @@ public class LoadSceneManager : MonoBehaviour
         }
     }
 
-    // ------------------- Core Functionality -------------------
-
-    /// <summary>
-    /// ‡¡∏Õ¥À≈—° ”À√—∫‚À≈¥©“°„À¡Ë·∫∫´‘ß‚§√π— 
-    /// </summary>
-    public void LoadNewScene(string sceneName)
+    private void Start()
     {
-        StartCoroutine(LoadSceneCoroutine(sceneName));
+        // ‡πÄ‡∏£‡∏¥‡πà‡∏°‡∏°‡∏≤‡πÉ‡∏´‡πâ‡∏ã‡πà‡∏≠‡∏ô‡∏´‡∏ô‡πâ‡∏≤ Credits ‡∏Å‡πà‡∏≠‡∏ô‡πÄ‡∏™‡∏°‡∏≠
+        if (creditsPanel != null)
+            creditsPanel.SetActive(false);
+        // ‡πÄ‡∏•‡πà‡∏ô‡πÄ‡∏û‡∏•‡∏á‡∏´‡∏ô‡πâ‡∏≤‡πÄ‡∏°‡∏ô‡∏π (‡∏ï‡πâ‡∏≠‡∏á‡∏°‡∏µ SoundManager ‡πÅ‡∏•‡∏∞‡πÑ‡∏ü‡∏•‡πå‡πÄ‡∏™‡∏µ‡∏¢‡∏á‡∏ä‡∏∑‡πà‡∏≠ 'BGM_Menu')
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.PlayMusic("BGM_Menu");
+        }
     }
 
+    // ------------------- Loading System -------------------
+
     /// <summary>
-    /// Coroutine À≈—° ”À√—∫°“√‚À≈¥©“°·∫∫ Asynchronous
+    /// ‡πÉ‡∏ä‡πâ‡∏Å‡∏±‡∏ö‡∏õ‡∏∏‡πà‡∏° Start Game: ‡∏•‡∏≤‡∏Å‡∏ü‡∏±‡∏á‡∏Å‡πå‡∏ä‡∏±‡∏ô‡∏ô‡∏µ‡πâ‡πÉ‡∏™‡πà‡∏õ‡∏∏‡πà‡∏° ‡πÅ‡∏•‡πâ‡∏ß‡∏Å‡∏£‡∏≠‡∏Å‡πÄ‡∏•‡∏Ç Scene (‡πÄ‡∏ä‡πà‡∏ô 1) ‡πÉ‡∏ô Inspector
     /// </summary>
-    private IEnumerator LoadSceneCoroutine(string sceneName)
+    public void LoadNewScene(int sceneIndex)
     {
-        // 1. ‡µ√’¬¡°“√‚À≈¥
-        if (loadingScreenPanel != null)
-        {
-            loadingScreenPanel.SetActive(true); // · ¥ßÀπÈ“®Õ‚À≈¥
-        }
+        PlayClickSound(); // ‡πÄ‡∏•‡πà‡∏ô‡πÄ‡∏™‡∏µ‡∏¢‡∏á‡∏Ñ‡∏•‡∏¥‡∏Å‡∏Å‡πà‡∏≠‡∏ô‡πÇ‡∏´‡∏•‡∏î
+        StartCoroutine(LoadSceneCoroutine(sceneIndex));
+    }
 
-        // 2. ‡√‘Ë¡°“√‚À≈¥·∫∫ Asynchronous
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+    private IEnumerator LoadSceneCoroutine(int sceneIndex)
+    {
+        if (loadingScreenPanel != null) loadingScreenPanel.SetActive(true);
 
-        // ªÈÕß°—π‰¡Ë„ÀÈ©“°„À¡Ë· ¥ß®π°«Ë“®–∂Ÿ° —Ëß
-        // (¡’ª√–‚¬™πÏ‡¡◊ËÕ§ÿ≥µÈÕß°“√„ÀÈ©“°‡°Ë“´ËÕπÀ“¬‰ª°ËÕπ À√◊Õ√Õ®π°«Ë“‚À≈¥‡ √Á® 90% ·≈È«§ËÕ¬ —Ëß)
-        // operation.allowSceneActivation = false; 
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
 
-        // 3. «π≈Ÿªµ√«® Õ∫§«“¡§◊∫ÀπÈ“
         while (!operation.isDone)
         {
-            // operation.progress ¡’§Ë“µ—Èß·µË 0.0 ∂÷ß 0.9 (‡¡◊ËÕæ√ÈÕ¡®–‡ª≈’Ë¬π©“°)
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
-
-            // √ÕÀπ÷Ëß‡ø√¡°ËÕπµ√«® Õ∫´È”
             yield return null;
         }
 
-        // 4.  ‘Èπ ÿ¥°“√‚À≈¥
-        // „π¢—ÈπµÕππ’È operation.isDone ‡ªÁπ true ·≈È« (100% ‡ √Á® ¡∫Ÿ√≥Ï)
+        if (loadingScreenPanel != null) loadingScreenPanel.SetActive(false);
 
-        // 5. ´ËÕπÀπÈ“®Õ‚À≈¥
-        if (loadingScreenPanel != null)
-        {
-            loadingScreenPanel.SetActive(false);
-        }
-
-        Debug.Log($"Scene '{sceneName}' loaded and activated successfully.");
+        Debug.Log($"Scene Index '{sceneIndex}' loaded successfully.");
     }
 
-    /// <summary>
-    /// ‡¡∏Õ¥ ”À√—∫´ËÕπÀπÈ“®Õ‚À≈¥ (Õ“®∂Ÿ°‡√’¬°®“°©“°„À¡Ë)
-    /// </summary>
-    public void HideLoadingScreen()
+    // ------------------- Credits System -------------------
+
+    public void ToggleCredits(bool show)
     {
-        if (loadingScreenPanel != null)
+        PlayClickSound();
+        if (creditsPanel != null)
         {
-            loadingScreenPanel.SetActive(false);
+            creditsPanel.SetActive(show);
         }
     }
 
-    // ------------------- Utility -------------------
+    // ------------------- Exit System -------------------
 
-    public string GetCurrentSceneName()
+    public void OnExitGameClick()
     {
-        return SceneManager.GetActiveScene().name;
+        PlayClickSound();
+        Debug.Log("Quit Game!");
+
+        Application.Quit();
+
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#endif
+    }
+
+    // ------------------- Helper -------------------
+
+    private void PlayClickSound()
+    {
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.PlaySFX("Click");
+        }
     }
 }
